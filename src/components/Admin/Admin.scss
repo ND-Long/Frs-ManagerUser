@@ -1,0 +1,54 @@
+.admin-header {
+    display: flex;
+    align-items: end;
+
+    .listUser-header {
+        text-align: left;
+    }
+
+    .search-user-email {
+        border-radius: 20px !important;
+        box-shadow: rgba(100, 100, 111, 0.1) 0px 7px 29px 0px;
+
+    }
+}
+
+.admin-table {
+    thead {
+        border-bottom: 2px solid gray;
+    }
+
+    table {
+        background-color: white;
+        border-radius: 20px;
+        box-sizing: border-box;
+        box-shadow: rgba(100, 100, 111, 0.1) 0px 7px 29px 0px;
+        text-align: center;
+
+        .button-control {
+            // display: flex;
+            // justify-content: center;
+            // align-items: center;
+            // gap: 10px;
+            font-size: 20px;
+            // flex-wrap: wrap;
+            height: 100%;
+
+            .button.view {
+                cursor: pointer;
+                color: #0088a3;
+            }
+
+            .button.delete {
+                cursor: pointer;
+                color: #ed5454;
+            }
+
+            .button.update {
+                cursor: pointer;
+                color: #ffbf00;
+            }
+        }
+    }
+
+}

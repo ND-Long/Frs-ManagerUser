@@ -1,14 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
+import './index.scss';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import reportWebVitals from './reportWebVitals';
+import Layout from './Layout';
+import { BrowserRouter } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.min.css';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <BrowserRouter>
+    <Layout />
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,0 +1,17 @@
+.heading-all {
+    background-color: white !important;
+
+    .logo-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .logo {
+            height: 20px;
+        }
+    }
+}
+
+.a.nav-link.mx-2.active {
+    color: red !important;
+}
