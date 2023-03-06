@@ -1,0 +1,143 @@
+.login-page {
+
+    .header-content {
+        padding: 0 20px 0 20px;
+        display: flex;
+        justify-content: right;
+        gap: 8px;
+        align-items: center;
+
+    }
+
+    .header {
+        padding: 10px;
+    }
+
+    button.btnSignup,
+    button.btnLogin {
+        border: none;
+        box-shadow: rgba(100, 100, 111, 0.5) 0px 7px 29px 0px;
+        background-color: rgb(255, 213, 210);
+        border-radius: 5px;
+        padding: 5px 10px 5px 10px;
+    }
+
+    button.btnSignup:hover {
+        background-color: #ffe6e6;
+    }
+
+    button.btnSignup:disabled {
+        cursor: no-drop;
+    }
+
+    .title {
+        text-align: center;
+        padding-bottom: 20px;
+        margin-top: 50px;
+    }
+
+    .wellcome {
+        text-align: center;
+        padding-bottom: 20px;
+        font-size: 20px;
+    }
+
+    label {
+        padding-top: 20px;
+    }
+
+    .btn {
+        margin-top: 20px;
+        color: white;
+    }
+
+
+    .forgotPass:hover {
+        color: black;
+    }
+
+    .goToHomePage {
+        cursor: pointer;
+        text-align: center;
+        padding-top: 20px;
+
+    }
+
+    .goToHomePage:hover {
+        color: black;
+    }
+
+    .login-signup {
+        z-index: 1000 !important;
+
+        .login-table {
+            width: 50%;
+            border-radius: 50px;
+            background-color: #b49b9b;
+            padding-bottom: 20px;
+            box-shadow: rgba(100, 100, 111, 0.5) 0px 7px 29px 0px;
+            // border: 2px dashed rgb(138, 96, 96);
+        }
+    }
+
+    .image-background {
+        z-index: 0 !important;
+    }
+
+
+
+    .iconLoading {
+        position: sticky;
+        color: rgb(230, 178, 178);
+        margin-bottom: 3px;
+        animation-name: iconLoading;
+        animation-duration: 500ms;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+    }
+
+    @keyframes iconLoading {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    @media only screen and (max-width: 680px) {
+        .login-signup .title {
+            width: 100%;
+        }
+
+        .login-signup .wellcome {
+            width: 100%;
+        }
+
+        .login-signup .content {
+            width: 70%;
+        }
+
+        .login-signup {
+
+            .login-table {
+                width: 80%;
+
+            }
+        }
+    }
+
+
+    @media only screen and (max-width: 400px) {
+
+
+        .login-signup {
+
+            .login-table {
+                width: 90%;
+
+            }
+        }
+    }
+}

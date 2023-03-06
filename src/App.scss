@@ -1,10 +1,18 @@
 * {
   padding: 0;
   margin: 0;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }
 
+
+
 .App {
-  background-color: #f3eeff;
+  background-color: #ffffff;
   height: 100vh;
 }
 
@@ -42,4 +50,32 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.App {
+  .header {
+    position: fixed !important;
+    top: 0;
+    width: 100%;
+    // display: block !important;
+    z-index: 9999 !important;
+    transition: all 0.3s ease;
+  }
+
+  .top {
+    top: 0px;
+  }
+
+  .down {
+    top: -56px;
+  }
+
+  .up {
+    top: 0px;
+  }
+
+  .content {
+    margin-top: 56px;
+  }
+
 }

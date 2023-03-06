@@ -1,23 +1,36 @@
 import axios from "../../utils/customAxios"
 
 const getAllUsers = () => {
-    return axios.get('/api/v1/users')
-}
-const postCreateUser = (name, age, gender, phone, job, price, image) => {
-    return axios.post('/api/v1/users', { name, age, gender, phone, job, price, image })
+    return axios.get('/products')
 }
 
-const putUpdateUser = (id, name, age, gender, phone, job, price, image) => {
-    return axios.put(`/api/v1/users/${id}`, { name, age, gender, phone, job, price, image })
+const getUserLimit = (limit, page) => {
+    return axios.get(`/products?_limit=${limit}&_page=${page}`)
+}
+
+const postCreateProduct = (type, color, gender, age, characteristic, source, price, image1, image2, image3) => {
+    return axios.post('/products', { type, color, gender, age, characteristic, source, price, image1, image2, image3 })
+}
+
+const putUpdateProduct = (id, type, color, gender, age, characteristic, source, price, image1, image2, image3) => {
+    return axios.put(`/products/${id}`, { type, color, gender, age, characteristic, source, price, image1, image2, image3 })
 }
 
 const deleteUser = (id) => {
-    return axios.delete(`/api/v1/users/${id}`)
+    return axios.delete(`/products/${id}`)
+}
+
+const apiLogin = () => {
+    return axios.get(`/users`)
+}
+
+const apiSignup = (username, password) => {
+    return axios.post(`/users`, { username, password })
 }
 
 
 
 export {
-    getAllUsers, postCreateUser, putUpdateUser,
-    deleteUser
+    getAllUsers, postCreateProduct, putUpdateProduct,
+    deleteUser, getUserLimit, apiLogin, apiSignup
 }

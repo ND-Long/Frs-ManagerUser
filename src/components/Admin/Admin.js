@@ -1,17 +1,22 @@
 import "./Admin.scss"
 import { useEffect, useState } from "react"
-import { getAllUsers } from "../services/apiServices"
-import AddNewUser from "./Modal/AddNewUser"
-import UpdateUser from "./Modal/UpdateUser"
-import DeleteUser from "./Modal/DeleteUser"
-import ViewUser from "./Modal/ViewUser"
+import { getAllUsers, getUserLimit } from "../services/apiServices"
+import AddNewProduct from "./Modal/AddNewProduct"
+import UpdateProduct from "./Modal/UpdateProduct"
+import DeleteProduct from "./Modal/DeleteProduct"
+import ViewProduct from "./Modal/ViewProduct"
 import { FaEye } from 'react-icons/fa';
 import { BsPencilFill } from 'react-icons/bs';
 import { RiDeleteBinFill } from 'react-icons/ri';
+import { TbSearch } from 'react-icons/tb';
+import { SiMicrosoftexcel } from 'react-icons/si';
+import { TbPlayerTrackNextFilled, TbPlayerTrackPrevFilled } from 'react-icons/tb';
 import ReactPaginate from 'react-paginate';
+import catGuest from "../../assets/catGuest.jpg"
 
 function Admin(props) {
-    const [listUsers, setListUsers] = useState([])
+    const [listProducts, setListProducts] = useState([])
+    const [listAllUsers, setListAllUsers] = useState([])
     const [showAddNew, setShowAddNew] = useState(false)
     const [showUpdate, setShowUpdate] = useState(false)
     const [inforUpdate, setInforUpdate] = useState({})
@@ -19,47 +24,51 @@ function Admin(props) {
     const [inforDelete, setinforDelete] = useState({})
     const [showView, setShowView] = useState(false)
     const [inforView, setInforView] = useState({})
-
-
+    const [limitUser, setLimitUser] = useState(5)
+    const [page, setPage] = useState(1)
 
     useEffect(() => {
         fetchAllUsers()
-    }, [])
+
+        window.scrollTo(0, 0)
+
+    }, [page])
 
     const fetchAllUsers = async () => {
+        const resLimitUser = await getUserLimit(limitUser, page)
         const resAllUsers = await getAllUsers()
-
-        setListUsers(resAllUsers)
+        console.log(resLimitUser)
+        setListProducts(resLimitUser)
+        setListAllUsers(resAllUsers)
     }
 
     const handleShowAddNew = () => {
         setShowAddNew(true)
     }
 
-    const handleShowUpdate = (id, name, age, gender, phone, job, price, image) => {
-        setInforUpdate({ id, name, age, gender, phone, job, price, image })
+    const handleShowUpdate = (id, type, color, gender, age, characteristic, source, price, image1, image2, image3) => {
+        setInforUpdate({ id, type, color, gender, age, characteristic, source, price, image1, image2, image3 })
         setShowUpdate(true)
     }
 
-    const handleShowDelete = (id, name, age, gender, phone, job, price, image) => {
-        setinforDelete({ id, name, age, gender, phone, job, price, image })
+    const handleShowDelete = (id, type, color, gender, age, characteristic, source, price, image1, image2, image3) => {
+        setinforDelete({ id, type, color, gender, age, characteristic, source, price, image1, image2, image3 })
         setShowDelete(true)
     }
 
-    const handleShowView = (id, name, age, gender, phone, job, price, image) => {
-        setInforView({ id, name, age, gender, phone, job, price, image })
+    const handleShowView = (id, type, color, gender, age, characteristic, source, price, image1, image2, image3) => {
+        setInforView({ id, type, color, gender, age, characteristic, source, price, image1, image2, image3 })
         setShowView(true)
     }
 
     const handlePageClick = (event) => {
-        const newOffset = (event.selected * 20) % items.length;
+        setPage(event.selected + 1)
         console.log(
-            `User requested page number ${event.selected}, which is offset ${newOffset}`
+            event.selected
         );
-        setItemOffset(newOffset);
+
     };
-    const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-    const [itemOffset, setItemOffset] = useState(0);
+
 
 
 
@@ -67,49 +76,80 @@ function Admin(props) {
 
     return (
         <div className="adminPage container">
-            <div className="admin-header mt-3 d-flex justify-content-between">
-                <div className="listUser-header">
-                    <h4>Danh sách nhân viên</h4>
+            <div className="admin-header mt-3 d-flex justify-content-between mt-5">
+                <div className="col-md-4">
+                    <div class="input-group mb-3 mt-5">
+                        <input type="text" class="form-control" placeholder="Tìm kiếm..." />
+                        <div class="input-group-prepend">
+                            <span class="btn btn-primary" id="basic-addon1"><TbSearch /></span>
+                        </div>
+                    </div>
                 </div>
 
-                <div className="button-header">
-                    <button className="btn btn-warning mx-2">Nhập file</button>
-                    <button className="btn btn-primary mx-2">Xuất file</button>
-                    <button className="btn btn-success mx-2" onClick={() => handleShowAddNew()}>Thêm mới</button>
+                <div className="button-header mb-3">
+                    {/* <button className="btn btn-warning ">Nhập</button>
+                    <button className="btn btn-primary mx-1">Xuất</button> */}
+                    <button className="btn btn-success ms-3" onClick={() => handleShowAddNew()}>Thêm</button>
                 </div>
             </div>
-            <div className=" col-md-6 mt-3">
-                <div className="input-group mb-3">
-                    <input type="text" className="search-user-email form-control" placeholder="Tìm kiếm theo email..." aria-label="Username" aria-describedby="basic-addon1" />
-                </div>
-            </div>
+
             <div className="admin-table">
                 <table className="table">
                     <thead>
                         <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Tên</th>
-                            <th scope="col">Tuổi</th>
+                            <th scope="col">Mã số</th>
+                            <th scope="col">Ảnh mô tả</th>
                             <th scope="col">Giới tính</th>
-                            <th scope="col">Nghìn đồng/giờ</th>
+                            <th scope="col">Tuổi</th>
+                            <th scope="col">Giá</th>
                             <th scope="col">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            listUsers.map((user, index) => (
-                                <tr key={user.id}>
-                                    <th scope="row">{user.id}</th>
+                            listProducts.map((product, index) => (
+                                <tr key={product.id} className="align-middle">
+                                    <th scope="row">{product.id}</th>
+                                    <td>
+                                        {
+                                            product.image1 ?
+                                                <img src={product.image1} style={{ height: "50px", borderRadius: "10px" }} /> :
+                                                <>
+                                                    {
+                                                        product.image2 ?
+                                                            <img src={product.image2} style={{ height: "50px", borderRadius: "10px" }} /> :
+                                                            <>
+                                                                {
+                                                                    product.image3 ?
+                                                                        <img src={product.image3} style={{ height: "50px", borderRadius: "10px" }} /> :
 
-                                    <td>{user.name}</td>
-                                    <td>{user.age}</td>
-                                    <td>{user.gender}</td>
-                                    <td>{user.price}</td>
+                                                                        <>
+                                                                            <img src={catGuest} style={{ height: "50px", borderRadius: "10px" }} />
+                                                                        </>
+                                                                }
+                                                            </>
+                                                    }
+                                                </>
+                                        }
+                                    </td>
+                                    <td>
+                                        {product.gender ?
+                                            <>{product.gender}</> :
+                                            <div style={{ fontSize: "13px", color: "gray" }}>Chưa rõ</div>
+                                        }
+                                    </td>
+                                    <td>
+                                        {product.age ?
+                                            <>{product.age}</> :
+                                            <div style={{ fontSize: "13px", color: "gray" }}>Chưa rõ</div>
+                                        }
+                                    </td>
+                                    <td>{product.price}</td>
                                     <td className="button-control">
                                         <FaEye className="button view mx-1"
-                                            onClick={() => handleShowView(user.id, user.name, user.age, user.gender, user.phone, user.job, user.price, user.image)} />
-                                        <BsPencilFill className="button update mx-1" onClick={() => handleShowUpdate(user.id, user.name, user.age, user.gender, user.phone, user.job, user.price, user.image)} />
-                                        <RiDeleteBinFill className="button delete mx-1" onClick={() => handleShowDelete(user.id, user.name, user.age, user.gender, user.phone, user.job, user.price)} />
+                                            onClick={() => handleShowView(product.id, product.type, product.color, product.gender, product.age, product.characteristic, product.source, product.price, product.image1, product.image2, product.image3)} />
+                                        <BsPencilFill className="button update mx-1" onClick={() => handleShowUpdate(product.id, product.type, product.color, product.gender, product.age, product.characteristic, product.source, product.price, product.image1, product.image2, product.image3)} />
+                                        <RiDeleteBinFill className="button delete mx-1" onClick={() => handleShowDelete(product.id, product.type, product.color, product.gender, product.age, product.characteristic, product.source, product.price, product.image1, product.image2, product.image3)} />
                                     </td>
 
                                 </tr>
@@ -119,34 +159,36 @@ function Admin(props) {
                     </tbody>
 
                 </table>
-                <ReactPaginate
-                    previousLabel="Previous"
-                    nextLabel="Next"
-                    pageClassName="page-item"
-                    pageLinkClassName="page-link"
-                    previousClassName="page-item"
-                    previousLinkClassName="page-link"
-                    nextClassName="page-item"
-                    nextLinkClassName="page-link"
-                    breakLabel="..."
-                    breakClassName="page-item"
-                    breakLinkClassName="page-link"
-                    pageCount={20}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={handlePageClick}
-                    containerClassName="pagination"
-                    activeClassName="active"
-                    forcePage={5}
-                />
+                <div className="paginate-user" >
+                    <ReactPaginate
+                        previousLabel={<TbPlayerTrackPrevFilled />}
+                        nextLabel={<TbPlayerTrackNextFilled />}
+                        pageClassName="page-item"
+                        pageLinkClassName="page-link"
+                        previousClassName="page-item"
+                        previousLinkClassName="page-link"
+                        nextClassName="page-item"
+                        nextLinkClassName="page-link"
+                        breakLabel="..."
+                        breakClassName="page-item"
+                        breakLinkClassName="page-link"
+                        pageCount={listAllUsers.length / limitUser}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={2}
+                        onPageChange={handlePageClick}
+                        containerClassName="pagination"
+                        activeClassName="active"
+                        forcePage={0}
+                    />
+                </div>
             </div>
-            <AddNewUser
+            <AddNewProduct
                 show={showAddNew}
                 setShow={setShowAddNew}
                 fetchAllUsers={fetchAllUsers}
             />
 
-            <UpdateUser
+            <UpdateProduct
                 show={showUpdate}
                 setShow={setShowUpdate}
                 fetchAllUsers={fetchAllUsers}
@@ -154,7 +196,7 @@ function Admin(props) {
                 setInforUpdate={setInforUpdate}
             />
 
-            <DeleteUser
+            <DeleteProduct
                 show={showDelete}
                 setShow={setShowDelete}
                 fetchAllUsers={fetchAllUsers}
@@ -162,7 +204,7 @@ function Admin(props) {
 
             />
 
-            <ViewUser
+            <ViewProduct
                 show={showView}
                 setShow={setShowView}
                 fetchAllUsers={fetchAllUsers}

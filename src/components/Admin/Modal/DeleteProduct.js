@@ -4,9 +4,11 @@ import Modal from 'react-bootstrap/Modal';
 import { toast } from 'react-toastify';
 import { deleteUser } from '../../services/apiServices';
 
-function DeleteUser(props) {
+function DeleteProduct(props) {
     const { show, setShow, fetchAllUsers, inforDelete } = props
 
+
+    console.log(inforDelete)
     const handleClose = () => {
         setShow(false);
     }
@@ -17,11 +19,11 @@ function DeleteUser(props) {
 
 
 
-    const handleDeleteUser = async () => {
-        const resDeleteUser = await deleteUser(inforDelete.id)
-        if (resDeleteUser) {
+    const handleDeleteProduct = async () => {
+        const resDeleteProduct = await deleteUser(inforDelete.id)
+        if (resDeleteProduct) {
             fetchAllUsers()
-            toast.success(`Xoá nhân viên thành công`)
+            toast.success(`Xoá thú cưng thành công`)
             handleClose()
         }
 
@@ -35,21 +37,31 @@ function DeleteUser(props) {
                 backdrop="static"
                 keyboard={false}
                 size="xl"
+                className='mt-5'
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Xoá nhân viên</Modal.Title>
+                    <Modal.Title>Bạn có chắc muốn xoá thú cưng?</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
-                    <span>Xác nhận xoá nhân viên:</span><br />
-                    <span>Tên: <b>{inforDelete.name}</b> </span> - <span>SĐT: <b>{inforDelete.phone}</b></span>
-
+                <Modal.Body >
+                    <div >
+                        <p>Giống: <b>{inforDelete.type}</b> </p>
+                        <p>Màu: <b>{inforDelete.color}</b></p>
+                        <p >Giá: <b>{inforDelete.price}</b></p>
+                    </div>
+                    <div className='image-delete mt-3' >
+                        {
+                            inforDelete.image1 ?
+                                <div className='image-show-delete'>  <img src={inforDelete.image1} /></div> :
+                                <></>
+                        }
+                    </div>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Đóng
                     </Button>
                     <Button variant="primary"
-                        onClick={() => handleDeleteUser()}
+                        onClick={() => handleDeleteProduct()}
                     >Lưu</Button>
                 </Modal.Footer>
             </Modal>
@@ -57,4 +69,4 @@ function DeleteUser(props) {
     );
 }
 
-export default DeleteUser;
+export default DeleteProduct;

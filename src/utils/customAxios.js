@@ -12,7 +12,9 @@ import axios from "axios";
 // })
 
 const instance = axios.create({
-    baseURL: "https://63e00d3359bccf35dabe55d8.mockapi.io",
+    // baseURL: "https://json-server-frs-manager-user-git-master-nd-long.vercel.app/",
+    baseURL: "https://3459-113-22-133-196.ap.ngrok.io",
+    // baseURL: "http://localhost:8000",
 
 });
 
