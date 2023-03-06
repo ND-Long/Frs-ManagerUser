@@ -65,7 +65,7 @@ function ViewProduct(props) {
                 backdrop="static"
                 keyboard={false}
                 size="xl"
-                className='mt-5'
+                className='p-4 mt-4'
             >
                 <Modal.Header closeButton>
                     <Modal.Title>Thông tin thú cưng</Modal.Title>

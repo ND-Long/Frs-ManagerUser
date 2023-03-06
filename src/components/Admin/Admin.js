@@ -1,6 +1,6 @@
 import "./Admin.scss"
 import { useEffect, useState } from "react"
-import { getAllUsers, getUserLimit } from "../services/apiServices"
+import { getAllProducts, getUserLimit } from "../services/apiServices"
 import AddNewProduct from "./Modal/AddNewProduct"
 import UpdateProduct from "./Modal/UpdateProduct"
 import DeleteProduct from "./Modal/DeleteProduct"
@@ -36,7 +36,7 @@ function Admin(props) {
 
     const fetchAllUsers = async () => {
         const resLimitUser = await getUserLimit(limitUser, page)
-        const resAllUsers = await getAllUsers()
+        const resAllUsers = await getAllProducts()
         console.log(resLimitUser)
         setListProducts(resLimitUser)
         setListAllUsers(resAllUsers)

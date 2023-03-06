@@ -1,6 +1,6 @@
 import axios from "../../utils/customAxios"
 
-const getAllUsers = () => {
+const getAllProducts = () => {
     return axios.get('/products')
 }
 
@@ -28,9 +28,14 @@ const apiSignup = (username, password) => {
     return axios.post(`/users`, { username, password })
 }
 
+const getProductById = (id) => {
+    return axios.get(`products/${id}`)
+}
+
 
 
 export {
-    getAllUsers, postCreateProduct, putUpdateProduct,
-    deleteUser, getUserLimit, apiLogin, apiSignup
+    getAllProducts, postCreateProduct, putUpdateProduct,
+    deleteUser, getUserLimit, apiLogin, apiSignup,
+    getProductById
 }

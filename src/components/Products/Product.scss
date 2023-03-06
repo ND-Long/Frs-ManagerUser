@@ -1,9 +1,10 @@
 .listProduct-content {
-    margin-top: 60px;
+    padding-top: 60px;
     gap: 50px;
     flex-wrap: wrap;
     display: flex;
     justify-content: center;
+    padding-bottom: 60px;
 
     .card-product {
         width: 300px;

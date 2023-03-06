@@ -37,7 +37,7 @@ function DeleteProduct(props) {
                 backdrop="static"
                 keyboard={false}
                 size="xl"
-                className='mt-5'
+                className='p-4 mt-4'
             >
                 <Modal.Header closeButton>
                     <Modal.Title>Bạn có chắc muốn xoá thú cưng?</Modal.Title>

@@ -75,7 +75,7 @@ function UpdateProduct(props) {
                 backdrop="static"
                 keyboard={false}
                 size="xl"
-                className='mt-5'
+                className='p-4 mt-4'
             >
                 <Modal.Header closeButton>
                     <Modal.Title>Sửa thông tin thú cưng</Modal.Title>

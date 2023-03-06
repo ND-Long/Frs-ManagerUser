@@ -1,14 +1,33 @@
 .detail-product {
     display: flex;
-    padding-top: 70px;
+    padding-top: 40px;
     gap: 30px;
 
     .img-detail {
         width: 50%;
+        box-shadow: rgba(100, 100, 111, 0.4) 0px 0px 29px 0px;
+
     }
 
     .content-detail {
         width: 50%;
-        background-color: rgb(220, 220, 220);
+        // background-color: rgb(220, 220, 220);
+    }
+}
+
+@media only screen and (max-width: 760px) {
+    .detail-product {
+        display: grid;
+        padding-top: 40px;
+        gap: 30px;
+
+        .img-detail {
+            width: 100%;
+        }
+
+        .content-detail {
+            width: 100%;
+            // background-color: rgb(220, 220, 220);
+        }
     }
 }
