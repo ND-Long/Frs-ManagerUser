@@ -11,14 +11,13 @@ PrivateRoutes.propTypes = {
 function PrivateRoutes(props) {
     const isAuthenticated = useSelector(state => state.account.user.auth)
     const checkRole = useSelector(state => state.account.user.role)
-
-    console.log(">>>>check props", checkRole)
     if (!isAuthenticated) {
         return <Navigate to="/login" />
     }
 
     if (checkRole !== "admin") {
-        toast.error("Bạn không phải Admin")
+        toast.error(`Bạn không phải Admin, tài khoản Admin là:  admin@gmail.com / admin`)
+
         return <Navigate to="/" />
     }
 

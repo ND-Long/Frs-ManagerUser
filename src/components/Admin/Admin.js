@@ -13,6 +13,7 @@ import { SiMicrosoftexcel } from 'react-icons/si';
 import { TbPlayerTrackNextFilled, TbPlayerTrackPrevFilled } from 'react-icons/tb';
 import ReactPaginate from 'react-paginate';
 import catGuest from "../../assets/catGuest.jpg"
+import PerfectScrollbar from 'react-perfect-scrollbar'
 
 function Admin(props) {
     const [listProducts, setListProducts] = useState([])
@@ -37,7 +38,7 @@ function Admin(props) {
     const fetchAllUsers = async () => {
         const resLimitUser = await getUserLimit(limitUser, page)
         const resAllUsers = await getAllProducts()
-        console.log(resLimitUser)
+
         setListProducts(resLimitUser)
         setListAllUsers(resAllUsers)
     }
@@ -63,10 +64,6 @@ function Admin(props) {
 
     const handlePageClick = (event) => {
         setPage(event.selected + 1)
-        console.log(
-            event.selected
-        );
-
     };
 
 
@@ -78,10 +75,10 @@ function Admin(props) {
         <div className="adminPage container">
             <div className="admin-header mt-3 d-flex justify-content-between mt-5">
                 <div className="col-md-4">
-                    <div class="input-group mb-3 mt-5">
-                        <input type="text" class="form-control" placeholder="Tìm kiếm..." />
-                        <div class="input-group-prepend">
-                            <span class="btn btn-primary" id="basic-addon1"><TbSearch /></span>
+                    <div className="input-group mb-3 mt-5">
+                        <input type="text" className="form-control" placeholder="Tìm kiếm..." />
+                        <div className="input-group-prepend">
+                            <span className="btn btn-primary" id="basic-addon1"><TbSearch /></span>
                         </div>
                     </div>
                 </div>
@@ -93,95 +90,97 @@ function Admin(props) {
                 </div>
             </div>
 
-            <div className="admin-table">
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Mã số</th>
-                            <th scope="col">Ảnh mô tả</th>
-                            <th scope="col">Giới tính</th>
-                            <th scope="col">Tuổi</th>
-                            <th scope="col">Giá</th>
-                            <th scope="col">Hành động</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            listProducts.map((product, index) => (
-                                <tr key={product.id} className="align-middle">
-                                    <th scope="row">{product.id}</th>
-                                    <td>
-                                        {
-                                            product.image1 ?
-                                                <img src={product.image1} style={{ height: "50px", borderRadius: "10px" }} /> :
-                                                <>
-                                                    {
-                                                        product.image2 ?
-                                                            <img src={product.image2} style={{ height: "50px", borderRadius: "10px" }} /> :
-                                                            <>
-                                                                {
-                                                                    product.image3 ?
-                                                                        <img src={product.image3} style={{ height: "50px", borderRadius: "10px" }} /> :
+            <PerfectScrollbar>
+                <div className="admin-table">
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Mã số</th>
+                                <th scope="col">Ảnh mô tả</th>
+                                <th scope="col">Giới tính</th>
+                                <th scope="col">Tuổi</th>
+                                <th scope="col">Giá</th>
+                                <th scope="col">Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                listProducts.map((product, index) => (
+                                    <tr key={`${product.id} - ${product.type}`} className="align-middle">
+                                        <th scope="row">{product.id}</th>
+                                        <td>
+                                            {
+                                                product.image1 ?
+                                                    <img src={product.image1} style={{ height: "50px", borderRadius: "10px" }} /> :
+                                                    <>
+                                                        {
+                                                            product.image2 ?
+                                                                <img src={product.image2} style={{ height: "50px", borderRadius: "10px" }} /> :
+                                                                <>
+                                                                    {
+                                                                        product.image3 ?
+                                                                            <img src={product.image3} style={{ height: "50px", borderRadius: "10px" }} /> :
 
-                                                                        <>
-                                                                            <img src={catGuest} style={{ height: "50px", borderRadius: "10px" }} />
-                                                                        </>
-                                                                }
-                                                            </>
-                                                    }
-                                                </>
-                                        }
-                                    </td>
-                                    <td>
-                                        {product.gender ?
-                                            <>{product.gender}</> :
-                                            <div style={{ fontSize: "13px", color: "gray" }}>Chưa rõ</div>
-                                        }
-                                    </td>
-                                    <td>
-                                        {product.age ?
-                                            <>{product.age}</> :
-                                            <div style={{ fontSize: "13px", color: "gray" }}>Chưa rõ</div>
-                                        }
-                                    </td>
-                                    <td>{product.price}</td>
-                                    <td className="button-control">
-                                        <FaEye className="button view mx-1"
-                                            onClick={() => handleShowView(product.id, product.type, product.color, product.gender, product.age, product.characteristic, product.source, product.price, product.image1, product.image2, product.image3)} />
-                                        <BsPencilFill className="button update mx-1" onClick={() => handleShowUpdate(product.id, product.type, product.color, product.gender, product.age, product.characteristic, product.source, product.price, product.image1, product.image2, product.image3)} />
-                                        <RiDeleteBinFill className="button delete mx-1" onClick={() => handleShowDelete(product.id, product.type, product.color, product.gender, product.age, product.characteristic, product.source, product.price, product.image1, product.image2, product.image3)} />
-                                    </td>
+                                                                            <>
+                                                                                <img src={catGuest} style={{ height: "50px", borderRadius: "10px" }} />
+                                                                            </>
+                                                                    }
+                                                                </>
+                                                        }
+                                                    </>
+                                            }
+                                        </td>
+                                        <td>
+                                            {product.gender ?
+                                                <>{product.gender}</> :
+                                                <div style={{ fontSize: "13px", color: "gray" }}>Chưa rõ</div>
+                                            }
+                                        </td>
+                                        <td>
+                                            {product.age ?
+                                                <>{product.age}</> :
+                                                <div style={{ fontSize: "13px", color: "gray" }}>Chưa rõ</div>
+                                            }
+                                        </td>
+                                        <td>{product.price}</td>
+                                        <td className="button-control">
+                                            <FaEye className="button view mx-1"
+                                                onClick={() => handleShowView(product.id, product.type, product.color, product.gender, product.age, product.characteristic, product.source, product.price, product.image1, product.image2, product.image3)} />
+                                            <BsPencilFill className="button update mx-1" onClick={() => handleShowUpdate(product.id, product.type, product.color, product.gender, product.age, product.characteristic, product.source, product.price, product.image1, product.image2, product.image3)} />
+                                            <RiDeleteBinFill className="button delete mx-1" onClick={() => handleShowDelete(product.id, product.type, product.color, product.gender, product.age, product.characteristic, product.source, product.price, product.image1, product.image2, product.image3)} />
+                                        </td>
 
-                                </tr>
-                            ))
-                        }
+                                    </tr>
+                                ))
+                            }
 
-                    </tbody>
+                        </tbody>
 
-                </table>
-                <div className="paginate-user" >
-                    <ReactPaginate
-                        previousLabel={<TbPlayerTrackPrevFilled />}
-                        nextLabel={<TbPlayerTrackNextFilled />}
-                        pageClassName="page-item"
-                        pageLinkClassName="page-link"
-                        previousClassName="page-item"
-                        previousLinkClassName="page-link"
-                        nextClassName="page-item"
-                        nextLinkClassName="page-link"
-                        breakLabel="..."
-                        breakClassName="page-item"
-                        breakLinkClassName="page-link"
-                        pageCount={listAllUsers.length / limitUser}
-                        marginPagesDisplayed={2}
-                        pageRangeDisplayed={2}
-                        onPageChange={handlePageClick}
-                        containerClassName="pagination"
-                        activeClassName="active"
-                        forcePage={0}
-                    />
+                    </table>
+                    <div className="paginate-user" >
+                        <ReactPaginate
+                            previousLabel={<TbPlayerTrackPrevFilled />}
+                            nextLabel={<TbPlayerTrackNextFilled />}
+                            pageClassName="page-item"
+                            pageLinkClassName="page-link"
+                            previousClassName="page-item"
+                            previousLinkClassName="page-link"
+                            nextClassName="page-item"
+                            nextLinkClassName="page-link"
+                            breakLabel="..."
+                            breakClassName="page-item"
+                            breakLinkClassName="page-link"
+                            pageCount={listAllUsers.length / limitUser}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={2}
+                            onPageChange={handlePageClick}
+                            containerClassName="pagination"
+                            activeClassName="active"
+                            forcePage={0}
+                        />
+                    </div>
                 </div>
-            </div>
+            </PerfectScrollbar>
             <AddNewProduct
                 show={showAddNew}
                 setShow={setShowAddNew}

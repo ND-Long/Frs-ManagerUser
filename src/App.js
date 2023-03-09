@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useSelector } from "react-redux"
+import 'react-perfect-scrollbar/dist/css/styles.css';
 
 
 function App() {
@@ -34,9 +35,11 @@ function App() {
       <div className={"header w-full text-lg font-semibold " + hState}>
         <Header />
       </div>
+
       <div className='content' >
         <Outlet />
       </div>
+
     </div >
   );
 }

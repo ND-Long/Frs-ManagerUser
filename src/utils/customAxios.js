@@ -13,8 +13,8 @@ import axios from "axios";
 
 const instance = axios.create({
     // baseURL: "https://json-server-frs-manager-user-git-master-nd-long.vercel.app/",
-    baseURL: "https://3459-113-22-133-196.ap.ngrok.io",
-    // baseURL: "http://localhost:8000",
+    // baseURL: "https://3459-113-22-133-196.ap.ngrok.io",
+    baseURL: "https://b4b3-103-56-160-247.ap.ngrok.io",
 
 });
 
@@ -29,19 +29,14 @@ instance.interceptors.request.use(function (config) {
     return config;
 }, function (error) {
     // NProgress.done();
-    // Do something with request error
     return Promise.reject(error);
 });
 
 // Add a response interceptor
 instance.interceptors.response.use(function (response) {
-    // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
     // NProgress.done();
     return response && response.data ? response.data : response;
 }, function (error) {
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
     // NProgress.done();
     return error && error.response && error.response.data ? error.response.data : Promise.reject(error);
 });

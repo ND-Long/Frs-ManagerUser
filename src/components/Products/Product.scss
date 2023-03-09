@@ -8,10 +8,67 @@
 
     .card-product {
         width: 300px;
-        border: 1px solid rgb(221, 221, 221);
-        border-radius: 20px;
-        box-shadow: rgba(100, 100, 111, 0.4) 0px 7px 29px 0px;
-        cursor: pointer;
+        // border: 1px solid rgb(238, 238, 238);
+        border-radius: 10px;
+        // box-shadow: rgba(200, 200, 200, 0.4) 0px 7px 29px 0px;
+        height: 250px;
+        // background-color: red;
+
+        .text-infor {
+            .product-description {
+                cursor: pointer;
+
+                .description-full {
+                    display: none;
+                    // font-size: 10px;
+                }
+
+                .description-mini {
+                    display: block;
+                }
+            }
+
+            .product-description:hover {
+                cursor: pointer;
+
+                .description-full {
+                    display: block;
+                    font-size: 12px;
+                }
+
+                .description-mini {
+                    display: none;
+                }
+            }
+
+            height: 60px;
+        }
+
+        .readmore {
+            color: #537094;
+        }
+
+        .readmore:hover {
+            // scale: 2;
+            color: #6fa7ec;
+        }
+
+        // .text-infor:hover {
+        //     color: #6fa7ec;
+        // }
+
+
+        .text-price {
+            color: rgb(255, 139, 139);
+            padding-top: 10px;
+        }
+
+
+        .card-body {
+            text-align: left;
+            font-weight: 600;
+        }
+
 
         .card-img-top {
             width: 100%;
@@ -19,6 +76,7 @@
             justify-content: center;
             height: width;
             position: relative;
+            cursor: pointer;
 
             img {
                 position: absolute;
@@ -26,11 +84,13 @@
                 height: 100%;
                 object-fit: cover;
                 object-position: 50% 50%;
-                border-radius: 20px;
+                border-radius: 10px;
+                background-color: antiquewhite;
+                transition: all ease 0.2s;
             }
 
             img:hover {
-                opacity: 0.8;
+                scale: 1.09;
             }
         }
 
@@ -41,6 +101,8 @@
         }
     }
 }
+
+
 
 @media only screen and (max-width: 1400px) {
     .listProduct-content {
@@ -65,7 +127,7 @@
         gap: 20px;
 
         .card-product {
-            max-width: 150px;
+            max-width: 240px;
         }
     }
 
@@ -74,7 +136,7 @@
 @media only screen and (max-width: 490px) {
     .listProduct-content {
         .card-product {
-            max-width: 150px;
+            max-width: 160px;
         }
     }
 

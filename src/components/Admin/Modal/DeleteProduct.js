@@ -6,9 +6,6 @@ import { deleteUser } from '../../services/apiServices';
 
 function DeleteProduct(props) {
     const { show, setShow, fetchAllUsers, inforDelete } = props
-
-
-    console.log(inforDelete)
     const handleClose = () => {
         setShow(false);
     }

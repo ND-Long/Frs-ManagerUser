@@ -3,10 +3,10 @@
     padding-top: 40px;
     gap: 30px;
 
+
     .img-detail {
         width: 50%;
-        box-shadow: rgba(100, 100, 111, 0.4) 0px 0px 29px 0px;
-
+        // box-shadow: rgba(100, 100, 111, 0.4) 0px 0px 29px 0px;
     }
 
     .content-detail {
@@ -15,17 +15,20 @@
     }
 }
 
-@media only screen and (max-width: 760px) {
+@media only screen and (max-width: 991px) {
     .detail-product {
         display: grid;
         padding-top: 40px;
         gap: 30px;
+        overflow: scroll !important;
 
         .img-detail {
             width: 100%;
         }
 
         .content-detail {
+            // position: absolute;
+            margin-top: 0;
             width: 100%;
             // background-color: rgb(220, 220, 220);
         }

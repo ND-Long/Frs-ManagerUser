@@ -52,6 +52,7 @@ function Login() {
         }
         let checkLogin = 0
         dataAllUser.map((dataUser, index) => {
+            console.log(dataUser)
             //check hass password
             const checkPass = bcrypt.compareSync(password, dataUser.password);
             const checkUsername = bcrypt.compareSync(username, dataUser.username);

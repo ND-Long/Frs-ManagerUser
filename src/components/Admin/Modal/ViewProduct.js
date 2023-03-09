@@ -20,7 +20,7 @@ function ViewProduct(props) {
     const [previewImage1, setPreviewImage1] = useState('')
     const [previewImage2, setPreviewImage2] = useState('')
     const [previewImage3, setPreviewImage3] = useState('')
-    console.log(inforView)
+
 
     const handleClose = () => {
         setShow(false);
