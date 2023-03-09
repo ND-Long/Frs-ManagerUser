@@ -49,7 +49,7 @@ function Cart(props) {
                                                     <div key={item.id} className='cart-product mt-1 mb-5' onClick={() => handleDetailsProduct(item.id)} >
                                                         <div className="img-cart-product mt-1">
                                                             <img className='img-cart-product' src={item.image1} />
-                                                            <span>{item.quantity}</span>
+                                                            <span className='quantity-product'>{item.quantity || 1}</span>
                                                         </div>
                                                         <div className="detail-product-cart">
                                                             <div>

@@ -92,10 +92,10 @@ function Header() {
 
                         <Nav.Link>
                             <NavLink
-                                to="/products"
+                                to="/checkout"
                                 className={({ isActive }) => (isActive ? "navs-link  activenav " : "navs-link")}
                             >
-                                Products
+                                Giỏ hàng
                             </NavLink>
                         </Nav.Link>
                         <NavLink
