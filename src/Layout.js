@@ -8,6 +8,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import Signup from './Auth/Signup';
 import PrivateRoutes from './routes/PrivateRoutes';
 import DetailProduct from './components/Products/DetailProduct';
+import Checkout from './components/Checkout/Checkout';
+import Profile from './components/Profile/Profile';
 
 
 function Layout(props) {
@@ -20,6 +22,9 @@ function Layout(props) {
 
                     <Route path="/admin" element={<PrivateRoutes><Admin /></PrivateRoutes>} />
                     <Route path="/product/:id" element={<DetailProduct />} />
+                    <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/profile" element={<Profile />} />
 
                 </Route>
 

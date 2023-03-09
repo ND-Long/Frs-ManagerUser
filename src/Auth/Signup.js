@@ -88,7 +88,7 @@ function Signup() {
         if (checkUsername === 0 && checkPassword === 0) {
             const resSignup = await apiSignup(hashUsername, hashPassword)
             if (resSignup) {
-
+                navigate('/login')
                 toast.success("Đăng ký tài khoản thành công!")
                 await fetchAllUser()
                 setPassword('')

@@ -8,29 +8,45 @@ import "./DetailProduct.scss"
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { addToCartRedux } from '../../redux/actions/productActions';
 import _ from "lodash"
+import { toast } from 'react-toastify';
 
 
 function DetailProduct(props) {
     const dataAllProduct = useSelector(state => state.product.product)
     const dataAddToCart = useSelector(state => state.product.cartProduct)
-
+    const [isChoosed, setIsChoosed] = useState(false)
     const param = useParams()
     const [dataDetail, setDataDetail] = useState({})
     const dispatch = useDispatch()
     useEffect(() => {
-
         findProduct()
         window.scrollTo(0, 0)
-    }, [])
+    }, [param, isChoosed])
 
     const handleAddCart = (data) => {
         dispatch(addToCartRedux(data))
-        console.log(">>>list cart", dataAddToCart)
+        setIsChoosed(true)
+        const findChoosed = dataAddToCart.find(item => +item.id === +param.id)
+        console.log(findChoosed)
+
+        if (!findChoosed) {
+            toast.success("Thêm vào giỏ hàng thành công!")
+            dispatch(addToCartRedux(data))
+        } else {
+            setIsChoosed(true)
+        }
 
     }
 
 
     const findProduct = async () => {
+        const findChoosed = dataAddToCart.find(item => +item.id === +param.id)
+        console.log(findChoosed)
+
+        if (findChoosed) {
+            setIsChoosed(true)
+        }
+
         const find = dataAllProduct.find((item) => +item.id === +param.id)
 
         if (find) {
@@ -82,7 +98,16 @@ function DetailProduct(props) {
                 <p>✔️ Nguồn gốc: {dataDetail.source}</p>
                 <p >✔️ Giá: <span style={{ color: "red" }}> {dataDetail.price}$</span></p>
                 <div className='footer-detail d-flex justify-content-end'>
+                    {
+                        isChoosed ?
+                            <button className='btn btn-dark mb-3 p-2 mt-3' disabled>Đã thêm</button>
+                            :
+                            <button onClick={() => handleAddCart(dataDetail)} className='btn btn-dark mb-3 p-2 mt-3'>Thêm vào giỏ hàng</button>
+
+                    }
                     <button onClick={() => handleAddCart(dataDetail)} className='btn btn-dark mb-3 p-2 mt-3'>Thêm vào giỏ hàng</button>
+
+
                 </div>
             </div>
 

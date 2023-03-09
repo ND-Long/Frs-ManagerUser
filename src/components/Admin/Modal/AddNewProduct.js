@@ -97,14 +97,14 @@ function AddNewProduct(props) {
                                     <option>Cái</option>
                                 </select>
                             </div>
-                            <div className="form-group col-md-3">
-                                <label >Tuổi</label>
+                            {/* <div className="form-group col-md-3">
+                                <label >Mã số</label>
                                 <input type="text" className="form-control mb-4" placeholder="Tuổi..."
                                     value={age}
                                     onChange={e => setAge(e.target.value)}
                                 />
-                            </div>
-                            <div className="form-group col-md-3">
+                            </div> */}
+                            {/* <div className="form-group col-md-3">
                                 <label >Đặc điểm</label>
                                 <textarea type="text" className="form-control" rows='1'
                                     placeholder='Đặc đ...'
@@ -119,7 +119,7 @@ function AddNewProduct(props) {
                                     value={source}
                                     onChange={e => setSource(e.target.value)}
                                 />
-                            </div>
+                            </div> */}
                             <div className="form-group col-md-3 mb-3">
                                 <label>Giá</label>
                                 <input type="number" className="form-control"

@@ -3,11 +3,27 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useSelector } from 'react-redux';
 import "./Header.scss"
+import PerfectScrollbar from 'react-perfect-scrollbar'
+import { useNavigate } from 'react-router-dom';
+
 function Cart(props) {
     const { show, setShow } = props
     const dataCart = useSelector(state => state.product.cartProduct)
-    console.log(dataCart)
-    const handleClose = () => setShow(false);
+    const navigate = useNavigate()
+    const handleClose = () => {
+        setShow(false)
+    };
+    const handleCheckout = () => {
+        handleClose()
+        navigate('/checkout')
+    };
+
+    const handleDetailsProduct = (event) => {
+        navigate(`/product/${event}`)
+        handleClose()
+
+    }
+
     return (
         <div className='cart-model' >
 
@@ -17,32 +33,52 @@ function Cart(props) {
                 </Modal.Header>
                 <Modal.Body >
 
-                    <div className='cart-body'>
-                        {
-                            dataCart.map((item) => (
-                                <div className='cart-product mt-1 mb-3' >
-                                    <div className="img-cart-product">
-                                        <img className='img-cart-product' src='https://vothisaucamau.edu.vn/wp-content/uploads/2022/12/1671385168_234_Anh-Meo-Cute-De-Thuong-Dang-Yeu-Den-Ngan-Ngo.jpg' />
-                                    </div>
-                                    <div className="detail-product-cart">
-                                        <div>
-                                            Meof ddaay
-                                        </div>
-                                        <div className="price">
-                                            99.000đ
-                                        </div>
-                                    </div>
-                                </div>
-                            ))
-                        }
-                    </div>
+                    <PerfectScrollbar>
+                        <div className='cart-body'>
+                            {
+                                dataCart.length <= 0 ?
+                                    <>
+                                        Giỏ hàng của bạn trống
+                                    </> :
+                                    <>
+                                        {
+                                            dataCart.map((item) => {
+                                                var number = +item.price;
+                                                const result = number.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 3 }) + " đ"
+                                                return (
+                                                    <div key={item.id} className='cart-product mt-1 mb-5' onClick={() => handleDetailsProduct(item.id)} >
+                                                        <div className="img-cart-product mt-1">
+                                                            <img className='img-cart-product' src={item.image1} />
+                                                            <span>{item.quantity}</span>
+                                                        </div>
+                                                        <div className="detail-product-cart">
+                                                            <div>
+                                                                {` ${item.type.slice(0, 30)} ... `}
+                                                            </div>
+                                                            <div className="price">
+                                                                {result}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </>
+                            }
+                        </div>
+                    </PerfectScrollbar>
 
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="success" onClick={handleClose}>
-                        Thanh toán
-                    </Button>
-                </Modal.Footer>
+                {
+                    dataCart.length <= 0 ?
+                        <>
+                        </> :
+                        <Modal.Footer>
+                            <Button variant="dark" onClick={handleCheckout}>
+                                Thanh toán
+                            </Button>
+                        </Modal.Footer>
+                }
             </Modal>
         </div>
     );

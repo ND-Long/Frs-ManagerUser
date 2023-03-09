@@ -18,11 +18,30 @@ const productReducer = (state = INITIAL_STATE, action) => {
             };
 
         case ADD_TO_CART:
-            console.log(">>>check redux", action.payload)
-            return {
-                ...state,
-                cartProduct: [...state.cartProduct, action.payload]
+            const productInCart = state.cartProduct.find(
+                p => +p.id === action.payload.id
+            )
+            if (!productInCart) {
+                return {
+                    ...state,
+                    cartProduct: [...state.cartProduct, action.payload]
+                }
+            } else {
+                let newCart = state.cartProduct
+                const indexProduct = newCart.findIndex(item => +item.id === action.payload.id)
+                if (newCart[indexProduct].quantity === undefined) {
+                    newCart[indexProduct].quantity = 1;
+                } else {
+                    newCart[indexProduct].quantity = newCart[indexProduct].quantity + 1
+                }
+                return {
+                    ...state,
+                    cartProduct: [...newCart]
+                }
             }
+
+
+
         default: return state;
     }
 };

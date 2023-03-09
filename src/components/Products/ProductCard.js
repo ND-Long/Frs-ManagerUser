@@ -12,19 +12,23 @@ function ProductCard(props) {
     }, [])
 
 
+
+
     const navigate = useNavigate()
 
     const handleClickProduct = (event) => {
         navigate(`/product/${event}`)
     }
     const { product } = props
+    var number = +product.price;
+    const result = number.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 3 }) + " đ"
     return (
         <div className="card-product h-100" >
             <div >
                 <div className='card-img-top' onClick={() => handleClickProduct(product.id)}>
                     <img className="img-top" src={product.image1} alt="..." />
                 </div>
-                <div className="card-body mt-2 mx-1">
+                <div className="card-body mt-2 mx-1" onClick={() => handleClickProduct(product.id)}>
                     <div className='text-infor'>
                         {/* <span className="">Giống: {product.type}</span> */}
                         <div
@@ -32,7 +36,7 @@ function ProductCard(props) {
                             style={{ fontSize: readMore ? "12px" : "16px" }}
                         >
                             {/* {props.description.slice(0, 50) + "...."} */}
-                            <div className="product-description" onClick={() => handleClickProduct(product.id)}>
+                            <div className="product-description">
 
                                 {/* <span className='description-full'>
                                     {` ${product.type.slice(0, 300)} `}
@@ -43,17 +47,13 @@ function ProductCard(props) {
                                 </span> */}
 
                                 <span>
-                                    {`Màu ${product.color}`}
-                                </span>
-                                <br></br>
-                                <span>
-                                    {`${product.age} tuổi - ${product.gender}`}
+                                    {` ${product.type} - ${product.color} - ${product.age} - ${product.gender} `}
                                 </span>
                             </div>
                         </div>
                     </div>
                     <div className='text-price'>
-                        ${product.price}
+                        {result}
                     </div>
                     {/* <button className='btn btn-dark my-3 float-sm-left'>Thêm</button> */}
                 </div>

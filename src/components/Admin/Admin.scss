@@ -27,7 +27,7 @@
         background-color: white;
         border-radius: 20px;
         box-sizing: border-box;
-        box-shadow: rgba(100, 100, 111, 0.1) 0px 7px 29px 0px;
+        // box-shadow: rgba(100, 100, 111, 0.1) 0px 7px 29px 0px;
         text-align: center;
 
         .button-control {
@@ -67,8 +67,8 @@
         user-select: none;
     }
 
-    // tr {
-    //     display: flex;
-    //     justify-content: space-between;
-    // }
+    th {
+        // display: flex;
+        // justify-content: space-between;
+    }
 }

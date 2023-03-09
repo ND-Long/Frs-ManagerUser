@@ -32,15 +32,8 @@ function Header() {
     }
 
 
-    const handleLogout = () => {
-        if (auth === true) {
-            dispatch({
-                type: USER_LOGOUT
-            })
-            // navigate('/login')
-        } else {
-            navigate('/login')
-        }
+    const handleProfile = () => {
+        navigate("/profile")
     }
 
 
@@ -67,11 +60,9 @@ function Header() {
 
                     <Nav>
                         <Nav.Link >
-                            {
-                                auth ?
-                                    <HiOutlineLogout className='logOut-icon' onClick={handleLogout} /> :
-                                    <FaUserAlt className='user-icon' onClick={handleLogout} />
-                            }
+
+                            <FaUserAlt className='user-icon' onClick={handleProfile} />
+
 
                             <div className='cart' onClick={() => setShowCart(true)}>
                                 <FaShoppingCart className='cart-icon' />
