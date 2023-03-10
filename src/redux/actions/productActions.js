@@ -6,6 +6,7 @@ export const ADD_TO_CART = "ADD_TO_CART"
 export const INCREASE_CART = "INCREASE_CART"
 export const DECREASE_CART = "DECREASE_CART"
 export const DELETE_CART = "DELETE_CART"
+export const DELETE_ALL_CART = "DELETE_ALL_CART"
 
 
 export const deleteCart = (data) => {
@@ -53,6 +54,12 @@ export const allUsersRedux = (data) => {
         type: FETCH_ALL_PRODUCTS,
         payload: data
     })
+}
+
+export const deleteAllCart = () => {
+    return {
+        type: DELETE_ALL_CART
+    }
 }
 
 

@@ -15,6 +15,19 @@
     }
 }
 
+.image-gallery-slide .image-gallery-description {
+    background: rgba(0, 0, 0, 0.4);
+    bottom: 70px;
+    color: #fff;
+    left: 45%; // you can modify this value to center the text
+    line-height: 1;
+    padding: 10px 20px;
+    position: absolute;
+    white-space: normal;
+    justify-content: center;
+    align-items: center;
+}
+
 @media only screen and (max-width: 991px) {
     .detail-product {
         display: grid;

@@ -29,7 +29,11 @@ const apiSignup = (username, password) => {
 }
 
 const getProductById = (id) => {
-    return axios.get(`products/${id}`)
+    return axios.get(`/products/${id}`)
+}
+
+const postCartOrder = (data) => {
+    return axios.post(`/list-cart`, data)
 }
 
 
@@ -37,5 +41,5 @@ const getProductById = (id) => {
 export {
     getAllProducts, postCreateProduct, putUpdateProduct,
     deleteUser, getUserLimit, apiLogin, apiSignup,
-    getProductById
+    getProductById, postCartOrder
 }

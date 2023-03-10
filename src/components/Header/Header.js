@@ -82,12 +82,12 @@ function Header() {
                         <Nav.Link>
                             <NavLink
                                 to="/"
-                                className={({ isActive }) => (isActive ? "navs-link  activenav nav-home" : "navs-link nav-home")}
+                                className={({ isActive }) => (isActive ? "navs-link  activenav " : "navs-link")}
                             >
                                 Trang chủ
+                                <div className={"under-line"}></div>
                             </NavLink>
                         </Nav.Link>
-
 
 
                         <Nav.Link>
@@ -96,14 +96,28 @@ function Header() {
                                 className={({ isActive }) => (isActive ? "navs-link  activenav " : "navs-link")}
                             >
                                 Giỏ hàng
+                                <div className={"under-line"}></div>
                             </NavLink>
                         </Nav.Link>
-                        <NavLink
-                            to="/admin"
-                            className={({ isActive }) => (isActive ? "navs-link  activenav" : "navs-link")}
-                        >
-                            Quản lý
-                        </NavLink>
+
+                        <Nav.Link>
+                            <NavLink
+                                to="/admin"
+                                className={({ isActive }) => (isActive ? "navs-link  activenav " : "navs-link")}
+                            >
+                                Quản lý
+                                <div className={"under-line"}></div>
+                            </NavLink>
+                        </Nav.Link>
+                        <Nav.Link>
+                            <NavLink
+                                to="/search-order"
+                                className={({ isActive }) => (isActive ? "navs-link  activenav " : "navs-link")}
+                            >
+                                Kiểm tra đơn hàng
+                                <div className={"under-line"}></div>
+                            </NavLink>
+                        </Nav.Link>
                     </div>
 
 

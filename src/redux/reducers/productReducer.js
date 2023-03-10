@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { ADD_TO_CART, FETCH_ALL_PRODUCTS, DECREASE_CART, INCREASE_CART, DELETE_CART } from "../actions/productActions";
+import { ADD_TO_CART, FETCH_ALL_PRODUCTS, DECREASE_CART, INCREASE_CART, DELETE_CART, DELETE_ALL_CART } from "../actions/productActions";
 
 
 const INITIAL_STATE = {
@@ -75,6 +75,11 @@ const productReducer = (state = INITIAL_STATE, action) => {
                 }
             }
 
+        case DELETE_ALL_CART:
+            return {
+                ...state,
+                cartProduct: []
+            }
 
 
 

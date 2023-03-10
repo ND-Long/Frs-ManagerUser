@@ -10,6 +10,7 @@ import PrivateRoutes from './routes/PrivateRoutes';
 import DetailProduct from './components/Products/DetailProduct';
 import Checkout from './components/Checkout/Checkout';
 import Profile from './components/Profile/Profile';
+import SearchOrder from './components/SearchOrder/SearchOrder';
 
 
 function Layout(props) {
@@ -25,6 +26,7 @@ function Layout(props) {
                     <Route path="/checkout" element={<Checkout />} />
                     <Route path="/checkout" element={<Checkout />} />
                     <Route path="/profile" element={<Profile />} />
+                    <Route path="/search-order/:id" element={<SearchOrder />} />
 
                 </Route>
 
@@ -36,7 +38,7 @@ function Layout(props) {
 
             <ToastContainer
                 position="top-center"
-                autoClose={2000}
+                autoClose={1000}
                 hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick
