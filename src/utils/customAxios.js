@@ -13,7 +13,7 @@ import axios from "axios";
 
 const instance = axios.create({
     // baseURL: "https://json-server-frs-manager-user-git-master-nd-long.vercel.app/",
-    baseURL: " https://9fe2-14-248-103-241.ap.ngrok.io",
+    baseURL: "https://e5irw9-8000.csb.app/",
     // baseURL: "http://localhost:8000",
 
 });

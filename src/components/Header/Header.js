@@ -111,7 +111,7 @@ function Header() {
                         </Nav.Link>
                         <Nav.Link>
                             <NavLink
-                                to="/search-order"
+                                to="/search-order/l"
                                 className={({ isActive }) => (isActive ? "navs-link  activenav " : "navs-link")}
                             >
                                 Kiểm tra đơn hàng

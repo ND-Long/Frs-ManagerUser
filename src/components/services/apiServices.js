@@ -36,10 +36,14 @@ const postCartOrder = (data) => {
     return axios.post(`/list-cart`, data)
 }
 
+const getDistrict = () => {
+    return axios.get(`https://provinces.open-api.vn/api/?depth=1`)
+}
+
 
 
 export {
     getAllProducts, postCreateProduct, putUpdateProduct,
     deleteUser, getUserLimit, apiLogin, apiSignup,
-    getProductById, postCartOrder
+    getProductById, postCartOrder, getDistrict
 }

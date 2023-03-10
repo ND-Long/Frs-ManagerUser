@@ -5,7 +5,7 @@ import { GrClose } from 'react-icons/gr';
 import { useNavigate } from 'react-router-dom';
 import { decreaseCart, deleteAllCart, deleteCart, increaseCart } from '../../redux/actions/productActions';
 import Select from 'react-select';
-import { postCartOrder } from '../services/apiServices';
+import { getDistrict, postCartOrder } from '../services/apiServices';
 import { toast } from 'react-toastify';
 import OrderCart from './OrderCart';
 
@@ -45,6 +45,13 @@ function Checkout(props) {
     const handelDeleteProduct = (data) => {
         dispatch(deleteCart(data))
     }
+
+    useEffect(() => {
+        const resDistrict = getDistrict()
+        console.log(resDistrict)
+    }, [])
+
+    const fetchDistrict = () => { }
 
     useEffect(() => {
         countPrice()
