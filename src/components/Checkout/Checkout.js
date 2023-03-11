@@ -5,16 +5,11 @@ import { GrClose } from 'react-icons/gr';
 import { useNavigate } from 'react-router-dom';
 import { decreaseCart, deleteAllCart, deleteCart, increaseCart } from '../../redux/actions/productActions';
 import Select from 'react-select';
-import { getDistrict, postCartOrder } from '../services/apiServices';
+import { getDistrict, getProvince, getWard, postCartOrder } from '../services/apiServices';
 import { toast } from 'react-toastify';
 import OrderCart from './OrderCart';
 
 
-const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-];
 
 
 function Checkout(props) {
@@ -27,16 +22,18 @@ function Checkout(props) {
     const [showModalOrder, setShowModalOrder] = useState(false)
     const [codeProduct, setCodeProduct] = useState("")
     const handelIncreaseProduct = (data) => {
-        // console.log(data)
         dispatch(increaseCart(data))
     }
     const [name, setName] = useState('')
     const [phone, setPhone] = useState('')
     const [email, setEmail] = useState('')
     const [address, setAddress] = useState('')
-    const [ward, setWWArd] = useState('')
+    const [ward, setWArd] = useState('')
     const [district, setDistrict] = useState('')
     const [province, setProvince] = useState('')
+    const [optionsWard, setOptionsWArd] = useState('')
+    const [optionsDistrict, setOptionsDistrict] = useState('')
+    const [optionsProvince, setOptionsProvince] = useState('')
 
     const handelDecreaseProduct = (data) => {
         dispatch(decreaseCart(data))
@@ -47,11 +44,85 @@ function Checkout(props) {
     }
 
     useEffect(() => {
-        const resDistrict = getDistrict()
-        console.log(resDistrict)
+        fetchProvince()
     }, [])
 
-    const fetchDistrict = () => { }
+    const fetchProvince = async () => {
+        let options = [];
+        try {
+            const resProvince = await getProvince()
+            resProvince.map((item) => {
+                options.push({
+                    value: item.name,
+                    label: item.name,
+                    code: item.code,
+                    codename: item.codename,
+                    district: item.district,
+                    division_type: item.division_type,
+                    name: item.name,
+                    phone_code: item.phone_code
+                })
+            })
+            setOptionsProvince(options)
+        } catch (error) {
+            toast.error("Máy chủ lỗi!")
+        }
+    }
+
+    const handleChooseProvince = async (type, value) => {
+        let options = [];
+
+        switch (type) {
+            case "PROVINCE":
+                try {
+                    const resDistrict = await getDistrict(value.code)
+                    resDistrict.districts.map((item) => {
+                        options.push({
+                            value: item.name,
+                            label: item.name,
+                            code: item.code,
+                            codename: item.codename,
+                            district: item.district,
+                            division_type: item.division_type,
+                            name: item.name,
+                            phone_code: item.phone_code
+                        })
+                    })
+                    setOptionsDistrict(options)
+                    setProvince(value.value)
+                } catch (error) {
+                    toast.error("Máy chủ lỗi!")
+                }
+                break;
+            case "DISTRICT":
+                try {
+                    const resWard = await getWard(value.code)
+                    resWard.wards.map((item) => {
+                        options.push({
+                            value: item.name,
+                            label: item.name,
+                            code: item.code,
+                            codename: item.codename,
+                            ward: item.ward,
+                            division_type: item.division_type,
+                            name: item.name,
+                            phone_code: item.phone_code
+                        })
+                    })
+                    setOptionsWArd(options)
+                    setDistrict(value.value)
+                } catch (error) {
+                    toast.error("Máy chủ lỗi!")
+                }
+                break;
+            case "WARD":
+                setWArd(value.value)
+                break;
+
+            default:
+                toast.error("Máy chủ lỗi!")
+        }
+    }
 
     useEffect(() => {
         countPrice()
@@ -66,14 +137,41 @@ function Checkout(props) {
         setResultTotalPrice(count)
         setDisplayTotalPrice(resultPrice)
     }
+
     const handleOrder = async () => {
         if (dataCart.length == 0) {
             toast.error("Giỏ hàng trống!")
             return
         }
 
+        //validate
+        if (!name || !phone || !email || !province || !district || !ward) {
+            if (!name) {
+                toast.error("Tên không được để trống!")
+            }
+            if (!phone) {
+                toast.error("SĐT không được để trống!")
+            }
+            if (!email) {
+                toast.error("Email không được để trống!")
+
+            }
+            if (!province) {
+                toast.error("Tỉnh không được để trống!")
+
+            }
+            if (!district) {
+                toast.error("Huyện không được để trống!")
+
+            }
+            if (!ward) {
+                toast.error("Xã không được để trống!")
+
+            }
+            return
+        }
+
         let newID = Math.floor(Math.random() * Date.now())
-        // console.log(newID)
         let listCart = {}
         let cartPush = []
         dataCart.map(item => {
@@ -87,6 +185,13 @@ function Checkout(props) {
         })
 
         listCart = {
+            name: name,
+            phone: phone,
+            email: email,
+            address: address,
+            ward: ward,
+            district: district,
+            province: province,
             code: newID,
             state: "waiting",
             cart: cartPush,
@@ -203,40 +308,40 @@ function Checkout(props) {
                             />
                         </div>
 
-                        <div className="form-group mb-3">
-                            <label htmlFor="inputAddress">Địa chỉ</label>
-                            <input type="text" className="form-control" id="inputAddress" placeholder="Địa chỉ"
-                                value={address}
-                                onChange={e => setAddress(e.target.value)}
-                            />
-                        </div>
+
 
                         <div className="row">
                             <div className="col-md-4 mb-3">
-                                <label htmlFor="inputState">Tỉnh</label>
+                                <label htmlFor="inputState">Thành phố/Tỉnh</label>
                                 <Select
-                                    placeholder={<div>Tỉnh</div>}
+                                    placeholder={<div>Thành phố/Tỉnh</div>}
                                     // value={selectedOption}
-                                    // onChange={this.handleChange}
-                                    options={options}
+                                    onChange={e => handleChooseProvince("PROVINCE", e)}
+                                    options={optionsProvince}
                                 />
                             </div>
                             <div className=" col-md-4 mb-3">
-                                <label htmlFor="inputState">Huyện</label>
+                                <label htmlFor="inputState">Quận/Huyện</label>
                                 <Select
-                                    placeholder={<div>Huyện</div>}
-                                    // value={selectedOption}
-                                    // onChange={this.handleChange}
-                                    options={options}
+                                    placeholder={<div>Quận/Huyện</div>}
+                                    onChange={e => handleChooseProvince("DISTRICT", e)}
+                                    options={optionsDistrict}
                                 />
                             </div>
                             <div className=" col-md-4 mb-3">
-                                <label htmlFor="inputState">Xã</label>
+                                <label htmlFor="inputState">Phường/xã</label>
                                 <Select
-                                    placeholder={<div>Xã</div>}
-                                    // value={selectedOption}
-                                    // onChange={this.handleChange}
-                                    options={options}
+                                    placeholder={<div>Phường/xã</div>}
+                                    onChange={e => handleChooseProvince("WARD", e)}
+                                    options={optionsWard}
+                                />
+                            </div>
+
+                            <div className="form-group mb-3">
+                                <label htmlFor="inputAddress">Địa chỉ</label>
+                                <input type="text" className="form-control" id="inputAddress" placeholder="Địa chỉ"
+                                    value={address}
+                                    onChange={e => setAddress(e.target.value)}
                                 />
                             </div>
 
@@ -284,7 +389,7 @@ function Checkout(props) {
                                 VNPay QR
                             </label>
                         </div>
-                        <button type="submit" onClick={() => handleOrder()} className="btn btn-dark mb-5" style={{ width: "100%" }}>{`Thanh toán ${displayTotalPrice}`}</button>
+                        <button type="button" onClick={() => handleOrder()} className="btn btn-dark mb-5" style={{ width: "100%" }}>{`Thanh toán ${displayTotalPrice}`}</button>
                     </form>
                 </div>
 

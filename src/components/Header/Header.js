@@ -10,15 +10,17 @@ import { USER_LOGOUT } from '../../redux/actions/userActions';
 import { useEffect, useState } from 'react';
 import { fetchAllUsersRedux, FETCH_ALL_PRODUCTS } from '../../redux/actions/productActions';
 import { getAllProducts } from '../services/apiServices';
-import { FaShoppingCart, FaUserAlt } from 'react-icons/fa';
-import { HiOutlineLogout } from 'react-icons/hi';
+import { MdShoppingCart } from 'react-icons/md';
+import { TiUser } from 'react-icons/ti';
 import Cart from './Cart';
-
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 
 function Header() {
     const dataAddToCart = useSelector(state => state.product.cartProduct)
-
+    const isAdmin = useSelector(state => state.account.user)
+    console.log(">>>isAdmin", isAdmin)
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [showCart, setShowCart] = useState(false)
@@ -40,91 +42,59 @@ function Header() {
 
 
     return (
-        <Navbar collapseOnSelect expand="lg" bg="white" variant="white" className='nav-bar-black'>
-            <Container className='header-container'  >
-                <Navbar.Toggle aria-controls="responsive-navbar-nav" className='toggle-header' />
-                <div className='link-brand'>
-                    <Navbar.Brand  >
+        <Navbar bg="white" expand="lg" className='header-container p-2'>
+            <Container fluid >
+                <Navbar.Toggle aria-controls="navbarScroll" />
+                <Nav.Link >
+                    <NavLink to="/">
+                        <div className='logo-header' >
+                            <img src={logoPetShop} className='logo' />
+                        </div>
+                    </NavLink>
+                </Nav.Link>
 
-                        <Link className={`navs-link-brand `} to="/">
-                            <div className='logo-header'>
-                                <img className='logo' src={logoPetShop} />
-                                <div>
-                                    PetShop
-                                </div>
-                            </div>
-                        </Link>
-                    </Navbar.Brand>
-                </div>
-                <div className='cart-header'>
-
-                    <Nav>
+                {/* <Navbar.Brand href="#" style={{ margin: "auto auto" }}>PetHouse</Navbar.Brand> */}
+                <Navbar.Collapse id="navbarScroll">
+                    <Nav className="nav-router">
                         <Nav.Link >
-
-                            <FaUserAlt className='user-icon' onClick={handleProfile} />
-
-
-                            <div className='cart' onClick={() => setShowCart(true)}>
-                                <FaShoppingCart className='cart-icon' />
-                                <span className='cart-counter'>
-                                    {dataAddToCart.length || 0}
-                                </span>
-                            </div>
+                            <Link to="/" className='link-router'>
+                                Trang chủ
+                            </Link>
+                        </Nav.Link>
+                        {
+                            isAdmin.role === "admin" ?
+                                <Nav.Link >
+                                    <Link to="/admin" className='link-router'>
+                                        Quản lý
+                                    </Link>
+                                </Nav.Link>
+                                :
+                                <></>
+                        }
+                        <Nav.Link >
+                            <Link to="#" className='link-router'>
+                                Danh mục sản phẩm
+                            </Link>
+                        </Nav.Link>
+                        <Nav.Link >
+                            <Link to="/search-order" className='link-router'>
+                                Tìm kiếm đơn hàng
+                            </Link>
                         </Nav.Link>
                     </Nav>
-                </div>
-
-
-
-                <Navbar.Collapse id="responsive-navbar-nav">
-
-                    <div className="nav-bar-router">
-                        <Nav.Link>
-                            <NavLink
-                                to="/"
-                                className={({ isActive }) => (isActive ? "navs-link  activenav " : "navs-link")}
-                            >
-                                Trang chủ
-                                <div className={"under-line"}></div>
-                            </NavLink>
-                        </Nav.Link>
-
-
-                        <Nav.Link>
-                            <NavLink
-                                to="/checkout"
-                                className={({ isActive }) => (isActive ? "navs-link  activenav " : "navs-link")}
-                            >
-                                Giỏ hàng
-                                <div className={"under-line"}></div>
-                            </NavLink>
-                        </Nav.Link>
-
-                        <Nav.Link>
-                            <NavLink
-                                to="/admin"
-                                className={({ isActive }) => (isActive ? "navs-link  activenav " : "navs-link")}
-                            >
-                                Quản lý
-                                <div className={"under-line"}></div>
-                            </NavLink>
-                        </Nav.Link>
-                        <Nav.Link>
-                            <NavLink
-                                to="/search-order/l"
-                                className={({ isActive }) => (isActive ? "navs-link  activenav " : "navs-link")}
-                            >
-                                Kiểm tra đơn hàng
-                                <div className={"under-line"}></div>
-                            </NavLink>
-                        </Nav.Link>
-                    </div>
 
 
                 </Navbar.Collapse>
-
-
-            </Container >
+                <Nav.Link className='cart-header'>
+                    <TiUser className='user-icon' onClick={handleProfile} />
+                    <div className='cart' onClick={() => setShowCart(true)}>
+                        <MdShoppingCart className='cart-icon' />
+                        <span className='cart-counter'>
+                            {dataAddToCart.length || 0}
+                        </span>
+                    </div>
+                </Nav.Link>
+            </Container>
             <Cart
                 show={showCart}
                 setShow={setShowCart}

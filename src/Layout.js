@@ -25,8 +25,9 @@ function Layout(props) {
                     <Route path="/product/:id" element={<DetailProduct />} />
                     <Route path="/checkout" element={<Checkout />} />
                     <Route path="/checkout" element={<Checkout />} />
-                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/profile" element={<PrivateRoutes><Profile /></PrivateRoutes>} />
                     <Route path="/search-order/:id" element={<SearchOrder />} />
+                    <Route path="/search-order/" element={<SearchOrder />} />
 
                 </Route>
 

@@ -64,7 +64,6 @@ const productReducer = (state = INITIAL_STATE, action) => {
                 let newCart = state.cartProduct
                 const indexProduct = newCart.findIndex(item => +item.id === action.payload.id)
                 if (newCart[indexProduct].quantity == undefined) {
-                    console.log(">>>")
                     newCart[indexProduct].quantity = 1;
                 } else {
                     newCart[indexProduct].quantity = newCart[indexProduct].quantity + 1

@@ -36,8 +36,18 @@ const postCartOrder = (data) => {
     return axios.post(`/list-cart`, data)
 }
 
-const getDistrict = () => {
+const getProvince = () => {
     return axios.get(`https://provinces.open-api.vn/api/?depth=1`)
+}
+const getDistrict = (code) => {
+    return axios.get(`https://provinces.open-api.vn/api/p/${code}?depth=2`)
+}
+const getWard = (code) => {
+    return axios.get(`https://provinces.open-api.vn/api/d/${code}?depth=2`)
+}
+
+const getSearchOrder = (id) => {
+    return axios.get(`/list-cart/?code=${id}`)
 }
 
 
@@ -45,5 +55,6 @@ const getDistrict = () => {
 export {
     getAllProducts, postCreateProduct, putUpdateProduct,
     deleteUser, getUserLimit, apiLogin, apiSignup,
-    getProductById, postCartOrder, getDistrict
+    getProductById, postCartOrder, getProvince,
+    getDistrict, getWard, getSearchOrder
 }

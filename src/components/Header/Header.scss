@@ -1,42 +1,65 @@
 .header-container {
-    position: relative;
-    height: 100%;
-    min-height: 50px;
+    -webkit-box-shadow: 0px 0px 10px 1px rgba(215, 215, 215, 0.9);
+    position: fixed;
+    width: 100%;
+    // height: 100%;
+    // min-height: 50px;
+
+    button.navbar-toggler.collapsed {
+        border: none;
+        width: 0;
+        color: white !important;
+        // display: none;
+
+        &:active {
+            border: none;
+        }
+    }
+
+    button.navbar-toggler {
+        border: none;
+        color: white !important;
+
+        &:active {
+            border: none;
+        }
+    }
+
+    .navbar-toggler {
+        &:active {
+            border: none;
+        }
+    }
+
+    span.navbar-toggler-icon {
+        font-size: 17px;
+        color: black !important;
+        font-weight: 600 !important;
+    }
 
     .cart-header {
-        position: absolute;
-        right: 0;
+        display: flex;
+        align-items: center;
+        gap: 20px;
 
         .cart-icon {
-            font-size: 20px;
-            margin-top: -6px;
-            color: gray;
+            font-size: 25px;
+            // margin-top: -6px;
+            color: rgb(0, 0, 0);
             transition: all 0.3s ease;
         }
 
 
 
-        .logOut-icon {
-            font-size: 25px;
-            margin-top: -6px;
-            margin-right: 20px;
-            // padding-right: px;
-            color: gray;
-            transition: all 0.2s ease;
-        }
-
         .user-icon {
-            font-size: 20px;
-            margin-top: -6px;
-            margin-right: 20px;
+            font-size: 29px;
+            margin-top: 3px;
+            // margin-right: 20px;
             // padding-right: px;
-            color: gray;
+            color: rgb(0, 0, 0);
             transition: all 0.2s ease;
         }
 
-        .logOut-icon:hover {
-            scale: (1.5);
-        }
 
         .user-icon:hover {
             scale: (1.5);
@@ -71,13 +94,13 @@
 
 .link-brand {
     // background-color: white !important;
-    position: absolute;
+    // position: absolute;
 
     .logo-header {
         display: flex;
         align-items: center;
         gap: 10px;
-        margin-top: 27px;
+        // margin-top: 27px;
 
         .logo {
             height: 55px;
@@ -156,15 +179,6 @@
 
 
 
-.nav-bar-router {
-
-    display: flex;
-    gap: 20px;
-    margin-left: 50%;
-    position: absolute;
-    left: -120px;
-}
-
 
 
 
@@ -226,7 +240,6 @@
 
 .quantity-product {
     color: whitesmoke;
-    position: absolute;
     margin-left: -10px;
     background-color: rgb(255, 124, 124);
     min-width: 20px;
@@ -234,17 +247,36 @@
     border-radius: 50%;
     text-align: center;
     font-size: 12px;
+    position: absolute;
 }
 
+.logo-header {
+    height: 50px;
 
+    .logo {
+        height: 100%;
+    }
+}
+
+.nav-router {
+    margin: auto auto;
+
+    .link-router {
+        text-decoration: none;
+        color: black;
+        font-weight: 600;
+    }
+
+}
 
 @media only screen and (max-width: 991px) {
-    .nav-bar-router {
-        display: grid;
-        margin-top: 20px;
-        width: 100px;
-        margin-left: 0;
-        position: sticky;
+
+    .logo-header {
+        margin-left: 41px;
+
+        .logo {
+            height: 40px;
+        }
     }
 
     .link-brand {
@@ -252,41 +284,17 @@
         text-align: center;
         display: flex;
         display: inline-block;
-        position: absolute;
         left: 50%;
         margin-left: -80px;
         margin-top: 5px;
         font-size: 1px;
-
-        .logo-header {
-
-            .logo {
-                height: 40px;
-            }
-        }
-
     }
-
-
-
-
 }
 
 
 @media only screen and (max-width: 577px) {
-    .cart-header {
-        margin-right: 20px;
-    }
-
-    // .navs-link {
-    //     font-size: 14px;
-    //     width: 70px !important;
-
     .under-line {
-
         display: none;
     }
-
-    // }
 
 }
