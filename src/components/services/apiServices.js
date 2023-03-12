@@ -50,11 +50,16 @@ const getSearchOrder = (id) => {
     return axios.get(`/list-cart/?code=${id}`)
 }
 
+const putUpdateInfoUser = (id, username, role, password, name, phone, birthday, address, province, district, ward) => {
+    return axios.put(`/users/${id}`, { username, role, password, name, phone, birthday, address, province, district, ward })
+}
+
 
 
 export {
     getAllProducts, postCreateProduct, putUpdateProduct,
     deleteUser, getUserLimit, apiLogin, apiSignup,
     getProductById, postCartOrder, getProvince,
-    getDistrict, getWard, getSearchOrder
+    getDistrict, getWard, getSearchOrder,
+    putUpdateInfoUser
 }

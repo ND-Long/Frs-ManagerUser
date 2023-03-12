@@ -34,6 +34,8 @@ function Checkout(props) {
     const [optionsWard, setOptionsWArd] = useState('')
     const [optionsDistrict, setOptionsDistrict] = useState('')
     const [optionsProvince, setOptionsProvince] = useState('')
+    const [isDisabledDistrict, setIsDisabledDistrict] = useState(true)
+    const [isDisabledWard, setIsDisabledWard] = useState(true)
 
     const handelDecreaseProduct = (data) => {
         dispatch(decreaseCart(data))
@@ -74,6 +76,9 @@ function Checkout(props) {
 
         switch (type) {
             case "PROVINCE":
+                setDistrict('')
+                setIsDisabledDistrict(false)
+                setWArd('')
                 try {
                     const resDistrict = await getDistrict(value.code)
                     resDistrict.districts.map((item) => {
@@ -95,6 +100,8 @@ function Checkout(props) {
                 }
                 break;
             case "DISTRICT":
+                setWArd('')
+                setIsDisabledWard(false)
                 try {
                     const resWard = await getWard(value.code)
                     resWard.wards.map((item) => {
@@ -210,9 +217,13 @@ function Checkout(props) {
 
     return (
         <div className='checkout-container container pt-5 pb-5'>
+
             <div className='checkout-header '>
+
                 <div className='list-cart-product'>
+
                     <h5 style={{ fontWeight: "700" }}>Giỏ hàng</h5>
+
                     {
                         dataCart.length > 0 ?
                             <>
@@ -253,33 +264,39 @@ function Checkout(props) {
                                         )
                                     })
                                 }
+
+                                <hr />
+
+                                <div className='total-price-demo'>
+                                    <div>
+                                        <p>Tạm tính</p>
+                                        <p>Phí giao hàng</p>
+
+                                    </div>
+                                    <div>
+                                        <p className='number'>{displayTotalPrice}</p>
+                                        <p className='number'>Miễn phí</p>
+                                    </div>
+                                </div>
+                                <hr></hr>
+                                <div className='total-price-demo'>
+                                    <div >
+                                        <p>Tổng</p>
+                                    </div>
+                                    <div>
+                                        <p className='price' >{displayTotalPrice}</p>
+                                    </div>
+                                </div>
                             </> :
-                            <>Giỏ hàng trống</>
+                            <>
+                                Giỏ hàng trống
+                                <hr />
+                            </>
 
                     }
-                    <hr />
 
-                    <div className='total-price-demo'>
-                        <div>
-                            <p>Tạm tính</p>
-                            <p>Phí giao hàng</p>
-
-                        </div>
-                        <div>
-                            <p className='number'>{displayTotalPrice}</p>
-                            <p className='number'>Miễn phí</p>
-                        </div>
-                    </div>
-                    <hr></hr>
-                    <div className='total-price-demo'>
-                        <div >
-                            <p>Tổng</p>
-                        </div>
-                        <div>
-                            <p className='price' >{displayTotalPrice}</p>
-                        </div>
-                    </div>
                 </div>
+
                 <div className='infro-transport'>
                     <h5 style={{ fontWeight: "700" }} >Thông tin vận chuyển</h5>
                     <form className='needs-validation' >
@@ -314,8 +331,7 @@ function Checkout(props) {
                             <div className="col-md-4 mb-3">
                                 <label htmlFor="inputState">Thành phố/Tỉnh</label>
                                 <Select
-                                    placeholder={<div>Thành phố/Tỉnh</div>}
-                                    // value={selectedOption}
+                                    placeholder={<div>TP/Tỉnh</div>}
                                     onChange={e => handleChooseProvince("PROVINCE", e)}
                                     options={optionsProvince}
                                 />
@@ -326,6 +342,8 @@ function Checkout(props) {
                                     placeholder={<div>Quận/Huyện</div>}
                                     onChange={e => handleChooseProvince("DISTRICT", e)}
                                     options={optionsDistrict}
+                                    isDisabled={isDisabledDistrict}
+                                    value={{ label: district }}
                                 />
                             </div>
                             <div className=" col-md-4 mb-3">
@@ -334,6 +352,8 @@ function Checkout(props) {
                                     placeholder={<div>Phường/xã</div>}
                                     onChange={e => handleChooseProvince("WARD", e)}
                                     options={optionsWard}
+                                    isDisabled={isDisabledWard}
+                                    value={{ label: ward }}
                                 />
                             </div>
 
@@ -394,6 +414,7 @@ function Checkout(props) {
                 </div>
 
             </div>
+
             <OrderCart
                 show={showModalOrder}
                 setShow={setShowModalOrder}

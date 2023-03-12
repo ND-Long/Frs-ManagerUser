@@ -68,6 +68,7 @@
     }
 
     .login-signup {
+        margin-top: -40px;
         z-index: 1000 !important;
 
         .login-table {
@@ -130,9 +131,18 @@
 
 
     @media only screen and (max-width: 400px) {
-
+        .wellcome {
+            display: none;
+        }
 
         .login-signup {
+            .title {
+                margin-top: 30px;
+            }
+
+            .content {
+                margin-top: -20px;
+            }
 
             .login-table {
                 width: 90%;
@@ -140,4 +150,5 @@
             }
         }
     }
+
 }

@@ -62,12 +62,12 @@ function Signup() {
 
 
         //make hash password
-        let saltPass = bcrypt.genSaltSync(10);
-        let hashPassword = bcrypt.hashSync(password, saltPass);
+        // let saltPass = bcrypt.genSaltSync(10);
+        // let hashPassword = bcrypt.hashSync(password, saltPass);
 
-        //make hash username
-        let saltUsername = bcrypt.genSaltSync(10);
-        let hashUsername = bcrypt.hashSync(username, saltUsername);
+        // //make hash username
+        // let saltUsername = bcrypt.genSaltSync(10);
+        // let hashUsername = bcrypt.hashSync(username, saltUsername);
 
 
 
@@ -76,8 +76,8 @@ function Signup() {
         //check userName
 
         dataAllUser.map(dataUser => {
-            const checkHashUsername = bcrypt.compareSync(username, dataUser.username);
-            if (checkHashUsername === true) {
+            // const checkHashUsername = bcrypt.compareSync(username, dataUser.username);
+            if (username === dataUser.username) {
                 toast.error("Tài khoản đã tồn tại")
                 checkUsername = 1
             }
@@ -86,7 +86,7 @@ function Signup() {
 
 
         if (checkUsername === 0 && checkPassword === 0) {
-            const resSignup = await apiSignup(hashUsername, hashPassword)
+            const resSignup = await apiSignup(username, password)
             if (resSignup) {
                 navigate('/login')
                 toast.success("Đăng ký tài khoản thành công!")

@@ -1,26 +1,38 @@
-import React, { useState } from 'react';
-import { Carousel } from '3d-react-carousal';
-import "./Slider.scss"
+import "./Slider.scss";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import React from "react";
+import SliderAuto from "react-slick";
 import imageSlider1 from "../../assets/imageSlider1.jpg"
 import imageSlider2 from "../../assets/imageSlider2.jpg"
 import imageSlider3 from "../../assets/imageSlider3.jpg"
 
 
-const Slider = () => {
-    let slides = [
-        <img src={imageSlider1} alt="1" />,
-        <img src={imageSlider2} alt="2" />,
-        <img src={imageSlider3} alt="3" />,
-    ];
+function Slider() {
+    const settings = {
+        dots: true,
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        pauseOnHover: false
+    };
+
     return (
-        <div className="slider pt-3 pb" >
-            <Carousel slides={slides} autoplay={true} interval={4000} />
+        <div className="slider-page container">
+            <SliderAuto {...settings}>
+                <div className="slider-item" >
+                    <img className="img-slider" src={imageSlider1} />
+                </div>
+                <div className="slider-item" >
+                    <img className="img-slider" src={imageSlider2} />
+                </div>
+                <div className="slider-item" >
+                    <img className="img-slider" src={imageSlider3} />
+                </div>
+            </SliderAuto>
         </div>
     );
 }
-
-
 export default Slider
-
-
-

@@ -52,22 +52,30 @@ function Login() {
         }
         let checkLogin = 0
         dataAllUser.map((dataUser, index) => {
-            console.log(dataUser)
-            //check hass password
-            const checkPass = bcrypt.compareSync(password, dataUser.password);
-            const checkUsername = bcrypt.compareSync(username, dataUser.username);
 
-            if (checkUsername === true && checkPass === true) {
+            //check hass password
+            // const checkPass = bcrypt.compareSync(password, dataUser.password);
+            // const checkUsername = bcrypt.compareSync(username, dataUser.username);
+
+            if (password === dataUser.password && username === dataUser.username) {
                 toast.success("Đăng nhập thành công!")
-                console.log(username, password, dataUser.role)
 
                 checkLogin = 1;
                 dispatch({
                     type: USER_LOGIN,
                     user: {
+                        id: dataUser.id,
                         username: username,
-                        password: password,
-                        role: dataUser.role
+                        password: dataUser.password,
+                        name: dataUser.name,
+                        phone: dataUser.phone,
+                        birthday: dataUser.birthday,
+                        address: dataUser.address,
+                        province: dataUser.province,
+                        district: dataUser.district,
+                        ward: dataUser.ward,
+                        role: dataUser.role,
+                        listCart: dataUser.listCart
                     }
                 })
                 navigate("/")

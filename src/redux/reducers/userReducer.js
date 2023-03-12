@@ -1,10 +1,20 @@
-import { USER_LOGIN, USER_LOGOUT } from "../actions/userActions";
+import { UPDATE_USER, USER_LOGIN, USER_LOGOUT } from "../actions/userActions";
 
 
 const INITIAL_STATE = {
     user: {
+        id: "",
         username: "",
         role: "",
+        password: "",
+        name: "",
+        phone: "",
+        birthday: "",
+        address: "",
+        province: "",
+        district: "",
+        ward: "",
+        listCart: [],
         auth: false
     }
 };
@@ -18,8 +28,18 @@ const userReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 user: {
+                    id: action.user.id,
                     username: action.user.username,
                     role: action.user.role,
+                    password: action.user.password,
+                    name: action.user.name,
+                    phone: action.user.phone,
+                    birthday: action.user.birthday,
+                    address: action.user.address,
+                    province: action.user.province,
+                    district: action.user.district,
+                    ward: action.user.ward,
+                    listCart: action.user.listCart,
                     auth: true
                 }
             };
@@ -31,6 +51,26 @@ const userReducer = (state = INITIAL_STATE, action) => {
                     username: "",
                     role: "",
                     auth: false
+                }
+
+            };
+        case UPDATE_USER:
+            return {
+                ...state,
+                user: {
+                    id: action.payload.id,
+                    username: action.payload.username,
+                    role: action.payload.role,
+                    password: action.payload.password,
+                    name: action.payload.name,
+                    phone: action.payload.phone,
+                    birthday: action.payload.birthday,
+                    address: action.payload.address,
+                    province: action.payload.province,
+                    district: action.payload.district,
+                    ward: action.payload.ward,
+                    listCart: action.payload.listCart,
+                    auth: true
                 }
 
             };

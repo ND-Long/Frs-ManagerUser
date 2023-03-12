@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-ProductCard.propTypes = {
 
-};
 
 function ProductCard(props) {
-    const [readMore, setreadMore] = useState(false);
     useEffect(() => {
 
     }, [])
@@ -21,43 +18,55 @@ function ProductCard(props) {
     }
     const { product } = props
     var number = +product.price;
+    var numberOld = +product.price * 1.25;
     const result = number.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 3 }) + " đ"
+    const resultOld = numberOld.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 3 }) + " đ"
     return (
-        <div className="card-product h-100" >
-            <div >
-                <div className='card-img-top' onClick={() => handleClickProduct(product.id)}>
-                    <img className="img-top" src={product.image1} alt="..." />
+        <div className="card-product" >
+
+            <div className="image-container" >
+
+                <div className="first">
+
+                    <div className="d-flex justify-content-between align-items-center">
+
+                        <span className="discount" onClick={() => handleClickProduct(product.id)}>-25%</span>
+                        {/* <span className="wishlist"><i className="fa fa-heart-o"></i></span> */}
+                    </div>
                 </div>
-                <div className="card-body mt-2 mx-1" onClick={() => handleClickProduct(product.id)}>
-                    <div className='text-infor'>
-                        {/* <span className="">Giống: {product.type}</span> */}
-                        <div
 
-                            style={{ fontSize: readMore ? "12px" : "16px" }}
-                        >
-                            {/* {props.description.slice(0, 50) + "...."} */}
-                            <div className="product-description">
+                <img src={product.image1} className="img-fluid rounded thumbnail-image" onClick={() => handleClickProduct(product.id)} />
 
-                                {/* <span className='description-full'>
-                                    {` ${product.type.slice(0, 300)} `}
-                                </span>
 
-                                <span className='description-mini'>
-                                    {` ${product.type.slice(0, 20)} ... `}
-                                </span> */}
+            </div>
 
-                                <span>
-                                    {` ${product.type} - ${product.color} - ${product.age} - ${product.gender} `}
-                                </span>
-                            </div>
+
+            <div className="product-detail-container p-2">
+
+                <div className="">
+
+                    <h5 className="dress-name " onClick={() => handleClickProduct(product.id)}>
+                        {product.type}, {product.color}, {product.gender}
+                    </h5>
+
+                    <div className="price-old-new">
+                        <div onClick={() => handleClickProduct(product.id)}>
+                            <span className="old-price ">{resultOld}</span>
+                            <br />
+                            <span className="new-price">{result}</span>
+
+                        </div>
+                        <div className='buy-now'>
+                            <span className="btn btn-success">Mua</span>
                         </div>
                     </div>
-                    <div className='text-price'>
-                        {result}
-                    </div>
-                    {/* <button className='btn btn-dark my-3 float-sm-left'>Thêm</button> */}
                 </div>
+
+
+
+
             </div>
+
         </div>
     );
 }

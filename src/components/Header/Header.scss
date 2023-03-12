@@ -37,10 +37,24 @@
         font-weight: 600 !important;
     }
 
+    .cart-header2 {
+        height: 1px;
+        // background-color: gray;
+        width: 86px;
+        margin-right: 19px;
+    }
+
     .cart-header {
         display: flex;
         align-items: center;
-        gap: 20px;
+        gap: 10px;
+        // background-color: red;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        margin-top: -16px;
+        // margin-top: -16px;
+        margin-right: 19px;
 
         .cart-icon {
             font-size: 25px;
@@ -53,7 +67,7 @@
 
         .user-icon {
             font-size: 29px;
-            margin-top: 3px;
+            margin-top: 1px;
             // margin-right: 20px;
             // padding-right: px;
             color: rgb(0, 0, 0);
@@ -77,6 +91,7 @@
         }
     }
 
+
 }
 
 .cart:hover {
@@ -92,15 +107,11 @@
 
 
 
-.link-brand {
-    // background-color: white !important;
-    // position: absolute;
-
+.nav-logo-header {
     .logo-header {
         display: flex;
         align-items: center;
-        gap: 10px;
-        // margin-top: 27px;
+
 
         .logo {
             height: 55px;
@@ -165,16 +176,7 @@
 
 
 
-.navs-link-brand {
-    color: rgb(0, 0, 0);
-    text-decoration: none;
-    font-weight: 600;
-}
 
-.navs-link-brand:hover {
-    color: rgb(0, 0, 0);
-    // background-color: gray;
-}
 
 
 
@@ -250,13 +252,7 @@
     position: absolute;
 }
 
-.logo-header {
-    height: 50px;
 
-    .logo {
-        height: 100%;
-    }
-}
 
 .nav-router {
     margin: auto auto;
@@ -271,23 +267,29 @@
 
 @media only screen and (max-width: 991px) {
 
-    .logo-header {
-        margin-left: 41px;
-
-        .logo {
-            height: 40px;
+    .header-container {
+        .cart-header {
+            top: 12px;
+            margin-top: 0
         }
     }
 
-    .link-brand {
-        width: 118px;
-        text-align: center;
-        display: flex;
-        display: inline-block;
-        left: 50%;
-        margin-left: -80px;
-        margin-top: 5px;
-        font-size: 1px;
+    .logo-header {
+        // margin-left: 41px;
+
+        height: 40px;
+        padding: 10px;
+        top: 0;
+        // background-color: red;
+        // display: flex;
+        // align-items: center;
+
+        .logo {
+            position: absolute;
+            left: 50%;
+            height: 40px;
+            margin-left: -47px;
+        }
     }
 }
 
@@ -296,5 +298,25 @@
     .under-line {
         display: none;
     }
+
+}
+
+@media only screen and (max-width: 500px) {
+
+    .logo-header {
+
+        // margin-left: -20px;
+
+        // .logo {
+        //     height: 45px !important;
+        //     margin-left: -60px;
+        //     position: absolute;
+        //     // left: 50%;
+        //     background-color: blue;
+        //     margin-left: -10px;
+        //     // background-color: red;
+        // }
+    }
+
 
 }

@@ -6,6 +6,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useSelector } from "react-redux"
 import 'react-perfect-scrollbar/dist/css/styles.css';
+import Footer from './components/Footer/Footer';
 
 
 function App() {
@@ -39,7 +40,9 @@ function App() {
       <div className='content' >
         <Outlet />
       </div>
-
+      <div className='footer '>
+        <Footer />
+      </div>
     </div >
   );
 }

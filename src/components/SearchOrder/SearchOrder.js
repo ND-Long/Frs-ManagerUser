@@ -23,6 +23,7 @@ function SearchOrder(props) {
     const navigate = useNavigate()
     const param = useParams()
     useEffect(() => {
+        window.scrollTo(0, 0)
         if (param.id) {
             setIdOrder(param.id)
             searchOrder()
@@ -30,8 +31,9 @@ function SearchOrder(props) {
     }, [param])
 
     const handleSearchIdOrder = async () => {
+        setIsFoundOrder(false)
         if (idOrder) {
-            setIsFoundOrder(false)
+
             setTotalPrice('')
             setAddressUser('')
             setDistrictUser('')
@@ -74,7 +76,6 @@ function SearchOrder(props) {
                 setProvinceUser(res[0].province)
                 setWardUser(res[0].ward)
                 setListOrderUser(res[0].cart)
-                console.log(">>list product", res[0].cart)
 
                 if (res[0].state == "waiting") {
                     setStateOrder("Chờ xác nhận")
@@ -103,7 +104,7 @@ function SearchOrder(props) {
                     <>
                         <div className='show-result-order mx-auto mt-3 container'>
                             <h6 className="state-order-header pt-4"  >
-                                TRẠNG THÁI ĐƠN HÀNG <span className='code-order'>#{idOrder}</span>
+                                TRẠNG THÁI ĐƠN HÀNG <span className='code-order'>#{param.id}</span>
                             </h6>
                             <div className='underline' />
                             <div className='state-order mt-2'>
@@ -160,7 +161,6 @@ function SearchOrder(props) {
                                     let priceOneProduct = item.price.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 3 }) + " đ"
                                     let number = +item.quantity * +item.price;
                                     let resultPrice = number.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 3 }) + " đ"
-                                    console.log(number)
                                     return (
                                         <div className='list-order-product pt-2 pb-2'>
                                             <div className='image-list-left'>

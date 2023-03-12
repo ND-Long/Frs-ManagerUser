@@ -35,8 +35,6 @@ function DetailProduct(props) {
 
     const findProduct = async () => {
         const findChoosed = dataAddToCart.find(item => +item.id === +param.id)
-        console.log(findChoosed)
-
         const find = dataAllProduct.find((item) => +item.id === +param.id)
 
         if (find) {

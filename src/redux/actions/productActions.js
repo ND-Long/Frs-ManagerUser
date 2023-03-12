@@ -7,7 +7,7 @@ export const INCREASE_CART = "INCREASE_CART"
 export const DECREASE_CART = "DECREASE_CART"
 export const DELETE_CART = "DELETE_CART"
 export const DELETE_ALL_CART = "DELETE_ALL_CART"
-
+export const BUY_ONE = 'BUY_ONE'
 
 export const deleteCart = (data) => {
     return {

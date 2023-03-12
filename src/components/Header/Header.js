@@ -18,9 +18,9 @@ import Button from 'react-bootstrap/Button';
 
 
 function Header() {
+    const isAuthenticated = useSelector(state => state.account.user.auth)
     const dataAddToCart = useSelector(state => state.product.cartProduct)
     const isAdmin = useSelector(state => state.account.user)
-    console.log(">>>isAdmin", isAdmin)
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [showCart, setShowCart] = useState(false)
@@ -35,7 +35,11 @@ function Header() {
 
 
     const handleProfile = () => {
-        navigate("/profile")
+        if (!isAuthenticated) {
+            navigate('/login')
+        } else {
+            navigate("/profile")
+        }
     }
 
 
@@ -46,7 +50,7 @@ function Header() {
             <Container fluid >
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Nav.Link >
-                    <NavLink to="/">
+                    <NavLink to="/" className='nav-logo-header'>
                         <div className='logo-header' >
                             <img src={logoPetShop} className='logo' />
                         </div>
@@ -93,6 +97,9 @@ function Header() {
                             {dataAddToCart.length || 0}
                         </span>
                     </div>
+                </Nav.Link>
+                <Nav.Link className='cart-header2'>
+
                 </Nav.Link>
             </Container>
             <Cart
