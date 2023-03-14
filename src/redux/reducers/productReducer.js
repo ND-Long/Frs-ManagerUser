@@ -1,10 +1,11 @@
 import { useEffect } from "react";
-import { ADD_TO_CART, FETCH_ALL_PRODUCTS, DECREASE_CART, INCREASE_CART, DELETE_CART, DELETE_ALL_CART } from "../actions/productActions";
+import { ADD_TO_CART, FETCH_ALL_PRODUCTS, DECREASE_CART, INCREASE_CART, DELETE_CART, DELETE_ALL_CART, BUY_ONE, DELETE_CART_BUY_ONE, DECREASE_QUANTITY_BUYONE, COUNT_CART } from "../actions/productActions";
 
 
 const INITIAL_STATE = {
     product: [],
-    cartProduct: []
+    cartProduct: [],
+    countCart: 0
 };
 
 
@@ -19,12 +20,16 @@ const productReducer = (state = INITIAL_STATE, action) => {
 
         case INCREASE_CART:
             let newCart = state.cartProduct
+
             const indexProduct = newCart.findIndex(item => +item.id === action.payload.id)
 
+
             newCart[indexProduct].quantity = newCart[indexProduct].quantity + 1
+
             return {
                 ...state,
-                cartProduct: [...newCart]
+                cartProduct: [...newCart],
+
             }
 
         case DECREASE_CART:
@@ -35,21 +40,38 @@ const productReducer = (state = INITIAL_STATE, action) => {
             } else {
                 newCart2[indexProduct2].quantity = newCart2[indexProduct2].quantity - 1
             }
+
             return {
                 ...state,
-                cartProduct: [...newCart2]
+                cartProduct: [...newCart2],
+            }
+
+        case DECREASE_QUANTITY_BUYONE:
+            let newCartBuyOne = state.cartProduct
+            const indexProductBuyOne = newCartBuyOne.findIndex(item => +item.id === action.payload.id)
+
+            newCartBuyOne[indexProductBuyOne].quantity = 1
+
+
+            return {
+                ...state,
+                cartProduct: [...newCartBuyOne],
             }
 
         case DELETE_CART:
+
             let cloneDelete = state.cartProduct
+
             const arrDelete = cloneDelete.filter(item => +item.id !== action.payload.id)
 
             return {
                 ...state,
-                cartProduct: [...arrDelete]
+                cartProduct: [...arrDelete],
+
             }
 
         case ADD_TO_CART:
+
             const productInCart = state.cartProduct.find(
                 p => +p.id === action.payload.id
             )
@@ -79,6 +101,15 @@ const productReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 cartProduct: []
             }
+
+        case COUNT_CART:
+            return {
+                ...state,
+                countCart: action.payload
+            }
+
+
+
 
 
 

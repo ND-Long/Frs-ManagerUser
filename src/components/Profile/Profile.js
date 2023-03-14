@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { USER_LOGOUT } from '../../redux/actions/userActions';
+import { USER_LOGIN, USER_LOGOUT } from '../../redux/actions/userActions';
+import { getOneUser } from '../services/apiServices';
 import './Profile.scss'
+import UserListOrder from './UserListOrder';
 import UserProfile from './UserProfile';
 
 function Profile(props) {
@@ -11,14 +13,33 @@ function Profile(props) {
     const dispatch = useDispatch()
     const [isActiveUser, setIsActiveUser] = useState(true)
     const [selected, setSelected] = useState(1);
+    const infoUser = useSelector(state => state.account.user)
 
     const handleClick = (divNum) => () => {
         setSelected(divNum);
     };
+
+    useEffect(() => {
+        fetchOneUser()
+    }, [selected])
+
+    const fetchOneUser = async () => {
+
+        const resOneUser = await getOneUser(infoUser.id)
+
+        dispatch({
+            type: USER_LOGIN,
+            user: resOneUser[0]
+        })
+    }
+
     useEffect(() => {
         if (!isAuthenticated) {
             navigate("/login")
+        } else {
+
         }
+        window.scrollTo(0, 0)
     }, [])
 
     const handleLogOut = () => {
@@ -40,6 +61,11 @@ function Profile(props) {
                 {
                     selected === 1 ?
                         <UserProfile /> :
+                        <></>
+                }
+                {
+                    selected === 2 ?
+                        <UserListOrder /> :
                         <></>
                 }
             </div>

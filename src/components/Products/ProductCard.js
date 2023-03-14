@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
+import { addToCartRedux } from '../../redux/actions/productActions';
 
 
 function ProductCard(props) {
@@ -8,7 +9,7 @@ function ProductCard(props) {
 
     }, [])
 
-
+    const dispatch = useDispatch()
 
 
     const navigate = useNavigate()
@@ -21,6 +22,11 @@ function ProductCard(props) {
     var numberOld = +product.price * 1.25;
     const result = number.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 3 }) + " đ"
     const resultOld = numberOld.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 3 }) + " đ"
+
+    const handleCheckout = async () => {
+        dispatch(addToCartRedux(product))
+        navigate(`/checkout/${product.id}`)
+    };
     return (
         <div className="card-product" >
 
@@ -46,7 +52,7 @@ function ProductCard(props) {
                 <div className="">
 
                     <h5 className="dress-name " onClick={() => handleClickProduct(product.id)}>
-                        {product.type}, {product.color}, {product.gender}
+                        {product.type}, {product.color}, {product.gender}, {product.age}
                     </h5>
 
                     <div className="price-old-new">
@@ -57,7 +63,7 @@ function ProductCard(props) {
 
                         </div>
                         <div className='buy-now'>
-                            <span className="btn btn-success">Mua</span>
+                            <span className="btn btn-success mx-1" onClick={handleCheckout} >Mua ngay</span>
                         </div>
                     </div>
                 </div>

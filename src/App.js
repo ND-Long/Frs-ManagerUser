@@ -12,7 +12,7 @@ import Footer from './components/Footer/Footer';
 function App() {
   const [hState, sethState] = useState("top");
   const userRedux = useSelector(state => state.account.user)
-
+  const [closeNav, setCloseNav] = useState(false)
   useEffect(() => {
     var lastVal = 0;
     window.onscroll = function () {
@@ -31,13 +31,27 @@ function App() {
   }, []);
 
 
+  const handleClickContent = () => {
+    setCloseNav(!closeNav)
+  }
+
+  useEffect(() => {
+    setCloseNav(!closeNav)
+  }, [window.scrollY])
+
+
+
+
+
   return (
     <div className="App" >
       <div className={"header w-full text-lg font-semibold " + hState}>
-        <Header />
+        <Header
+          clickContent={closeNav}
+        />
       </div>
 
-      <div className='content' >
+      <div className='content' onClick={handleClickContent} >
         <Outlet />
       </div>
       <div className='footer '>

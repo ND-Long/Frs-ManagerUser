@@ -32,6 +32,7 @@ function UserProfile(props) {
     useEffect(() => {
         fetchProvince()
         setDefaultInfo()
+        window.scrollTo(0, 0)
     }, [])
 
     const setDefaultInfo = () => {
@@ -83,7 +84,7 @@ function UserProfile(props) {
                     setOptionsWArd('')
                     setDistrict('')
                     setWArd('')
-                    setIsDisabledDistrict(false)
+
 
                     try {
 
@@ -102,12 +103,13 @@ function UserProfile(props) {
                         })
                         setOptionsDistrict(options)
                         setProvince(value.value)
+                        setIsDisabledDistrict(false)
                     } catch (error) {
                         toast.error("Máy chủ lỗi!")
                     }
                     break;
                 case "DISTRICT":
-                    setIsDisabledWard(false)
+
                     setOptionsWArd('')
                     setWArd('')
                     try {
@@ -128,6 +130,7 @@ function UserProfile(props) {
                         })
                         setOptionsWArd(options)
                         setDistrict(value.value)
+                        setIsDisabledWard(false)
                     } catch (error) {
                         toast.error("Máy chủ lỗi!")
                     }
@@ -148,10 +151,10 @@ function UserProfile(props) {
 
     const handleUpdateInfoUser = async () => {
         try {
-            const resUpdate = await putUpdateInfoUser(inforUser.id, username, inforUser.role, inforUser.password, name, phone, birthday, address, province, district, ward, inforUser.listCart)
-            // dispatch(putInfoUserAction(inforUser.id, username, inforUser.role, inforUser.password, name, phone, birthday, address, province, district, ward, inforUser.listCart))
-            dispatch(putUpdateInfoUserRedux(resUpdate))
-
+            const resUpdate = await putUpdateInfoUser(inforUser.id, inforUser.username, inforUser.role, inforUser.password, name, phone, birthday, address, province, district, ward, inforUser.listOrder)
+            // dispatch(putInfoUserAction(inforUser.id, inforUser.username, inforUser.role, inforUser.password, name, phone, birthday, address, province, district, ward, inforUser.listCart))
+            dispatch(putUpdateInfoUserRedux(inforUser.id, inforUser.username, inforUser.role, inforUser.password, name, phone, birthday, address, province, district, ward, inforUser.listOrder))
+            console.log(">>>checkUpdate", inforUser.id, username, inforUser.role, inforUser.password, name, phone, birthday, address, province, district, ward, inforUser.listCart)
 
             toast.success("Cập nhật thông tin thành công!")
         } catch (error) {

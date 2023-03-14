@@ -13,7 +13,7 @@ const postCreateProduct = (type, color, gender, age, characteristic, source, pri
 }
 
 const putUpdateProduct = (id, type, color, gender, age, characteristic, source, price, image1, image2, image3) => {
-    return axios.put(`/products/${id}`, { type, color, gender, age, characteristic, source, price, image1, image2, image3 })
+    return axios.patch(`/products/${id}`, { type, color, gender, age, characteristic, source, price, image1, image2, image3 })
 }
 
 const deleteUser = (id) => {
@@ -22,6 +22,10 @@ const deleteUser = (id) => {
 
 const apiLogin = () => {
     return axios.get(`/users`)
+}
+
+const getOneUser = (id) => {
+    return axios.get(`/users/?id=${id}`)
 }
 
 const apiSignup = (username, password) => {
@@ -50,8 +54,8 @@ const getSearchOrder = (id) => {
     return axios.get(`/list-cart/?code=${id}`)
 }
 
-const putUpdateInfoUser = (id, username, role, password, name, phone, birthday, address, province, district, ward) => {
-    return axios.put(`/users/${id}`, { username, role, password, name, phone, birthday, address, province, district, ward })
+const putUpdateInfoUser = (id, username, role, password, name, phone, birthday, address, province, district, ward, listOrder) => {
+    return axios.patch(`/users/${id}`, { username, role, password, name, phone, birthday, address, province, district, ward, listOrder })
 }
 
 
@@ -61,5 +65,5 @@ export {
     deleteUser, getUserLimit, apiLogin, apiSignup,
     getProductById, postCartOrder, getProvince,
     getDistrict, getWard, getSearchOrder,
-    putUpdateInfoUser
+    putUpdateInfoUser, getOneUser
 }

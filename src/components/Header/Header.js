@@ -6,9 +6,9 @@ import { BrowserRouter, Routes, Route, NavLink, Link, useNavigate, useSearchPara
 import logoPetShop from "../../assets/logoPetHouse.png"
 import "./Header.scss"
 import { useDispatch, useSelector } from 'react-redux';
-import { USER_LOGOUT } from '../../redux/actions/userActions';
+import { deleteListOrderUser, getAllListOrder, USER_LOGOUT } from '../../redux/actions/userActions';
 import { useEffect, useState } from 'react';
-import { fetchAllUsersRedux, FETCH_ALL_PRODUCTS } from '../../redux/actions/productActions';
+import { countCartRedux, fetchAllProductsRedux, FETCH_ALL_PRODUCTS } from '../../redux/actions/productActions';
 import { getAllProducts } from '../services/apiServices';
 import { MdShoppingCart } from 'react-icons/md';
 import { TiUser } from 'react-icons/ti';
@@ -17,20 +17,42 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 
-function Header() {
+function Header({ clickContent }) {
     const isAuthenticated = useSelector(state => state.account.user.auth)
     const dataAddToCart = useSelector(state => state.product.cartProduct)
-    const isAdmin = useSelector(state => state.account.user)
+    const countCart = useSelector(state => state.product.countCart)
+    const dataUser = useSelector(state => state.account.user)
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [showCart, setShowCart] = useState(false)
     const auth = useSelector(state => state.account.user.auth)
+    const [navExpanded, setVavExpanded] = useState(clickContent)
+    let count = 0
     useEffect(() => {
-        fetchAllUsers()
+        fetchAllProducts()
     }, [])
 
-    const fetchAllUsers = async () => {
-        dispatch(fetchAllUsersRedux())
+
+    useEffect(() => {
+        dataAddToCart.map((item) => {
+            count += item.quantity
+        })
+        dispatch(countCartRedux(count))
+    }, [dataAddToCart])
+
+
+    useEffect(() => {
+        setVavExpanded(false)
+    }, [clickContent])
+
+
+
+
+
+
+
+    const fetchAllProducts = async () => {
+        dispatch(fetchAllProductsRedux())
     }
 
 
@@ -42,23 +64,23 @@ function Header() {
         }
     }
 
-
-
-
     return (
-        <Navbar bg="white" expand="lg" className='header-container p-2'>
-            <Container fluid >
+        <Navbar bg="white" expand="lg" className='header-container p-2' onToggle={() => setVavExpanded(!navExpanded)} expanded={navExpanded}>
+            <Container fluid  >
                 <Navbar.Toggle aria-controls="navbarScroll" />
-                <Nav.Link >
-                    <NavLink to="/" className='nav-logo-header'>
-                        <div className='logo-header' >
+                <Nav.Link onClick={() => {
+                    window.scrollTo(0, 0)
+                    setVavExpanded(false)
+                }} >
+                    <NavLink to="/" className='nav-logo-header' >
+                        <div className='logo-header'  >
                             <img src={logoPetShop} className='logo' />
                         </div>
                     </NavLink>
                 </Nav.Link>
 
                 {/* <Navbar.Brand href="#" style={{ margin: "auto auto" }}>PetHouse</Navbar.Brand> */}
-                <Navbar.Collapse id="navbarScroll">
+                <Navbar.Collapse id="navbarScroll" onClick={() => setVavExpanded(false)}>
                     <Nav className="nav-router">
                         <Nav.Link >
                             <Link to="/" className='link-router'>
@@ -66,7 +88,7 @@ function Header() {
                             </Link>
                         </Nav.Link>
                         {
-                            isAdmin.role === "admin" ?
+                            dataUser.role === "admin" ?
                                 <Nav.Link >
                                     <Link to="/admin" className='link-router'>
                                         Quản lý
@@ -89,18 +111,16 @@ function Header() {
 
 
                 </Navbar.Collapse>
-                <Nav.Link className='cart-header'>
+                <Nav.Link className='cart-header' onClick={() => setVavExpanded(false)}>
                     <TiUser className='user-icon' onClick={handleProfile} />
                     <div className='cart' onClick={() => setShowCart(true)}>
                         <MdShoppingCart className='cart-icon' />
                         <span className='cart-counter'>
-                            {dataAddToCart.length || 0}
+                            {countCart || 0}
                         </span>
                     </div>
                 </Nav.Link>
-                <Nav.Link className='cart-header2'>
 
-                </Nav.Link>
             </Container>
             <Cart
                 show={showCart}

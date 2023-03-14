@@ -2,11 +2,8 @@ import React from 'react';
 import {
     MDBFooter,
     MDBContainer,
-    MDBIcon,
-    MDBInput,
     MDBCol,
     MDBRow,
-    MDBBtn
 } from 'mdb-react-ui-kit';
 import { FaFacebook, FaTwitter, FaGithub, FaInstagram, FaHome, FaPhoneAlt } from 'react-icons/fa'
 import { HiMail } from 'react-icons/hi'
@@ -39,12 +36,6 @@ const Footer = () => {
                             <FaInstagram className='icon-contact' />
                         </a>
                     </div>
-
-
-
-
-
-
                 </div>
             </section>
 

@@ -12,8 +12,8 @@ import axios from "axios";
 // })
 
 const instance = axios.create({
-    // baseURL: "https://943f-171-241-13-219.ap.ngrok.io",
-    baseURL: " https://6d5e-171-241-13-219.ap.ngrok.io",
+    baseURL: "https://json-server-frs-manager-api-git-master-nd-long.vercel.app/",
+    // baseURL: "https://5d55-2401-d800-2e51-2057-6cbc-5693-7d5f-6bc0.ap.ngrok.io",
     // baseURL: "http://localhost:8000",
 
 });

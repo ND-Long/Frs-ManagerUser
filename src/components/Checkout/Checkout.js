@@ -2,20 +2,29 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import "./Checkout.scss"
 import { GrClose } from 'react-icons/gr';
-import { useNavigate } from 'react-router-dom';
-import { decreaseCart, deleteAllCart, deleteCart, increaseCart } from '../../redux/actions/productActions';
+import { useNavigate, useParams } from 'react-router-dom';
+import { addToCartRedux, decreaseBuyOne, decreaseCart, deleteAllCart, deleteCart, increaseCart } from '../../redux/actions/productActions';
 import Select from 'react-select';
 import { getDistrict, getProvince, getWard, postCartOrder } from '../services/apiServices';
 import { toast } from 'react-toastify';
 import OrderCart from './OrderCart';
-
+import _ from "lodash"
+import { putInfoUserAction, putUpdateInfoUserRedux } from '../../redux/actions/userActions';
 
 
 
 function Checkout(props) {
-    const dataCart = useSelector(state => state.product.cartProduct)
+    const param = useParams()
     const navigate = useNavigate()
+    const dataCartAll = useSelector(state => state.product.cartProduct)
+    const userLogin = useSelector(state => state.account.user)
+    const auth = useSelector(state => state.account.user.auth)
+    const cloneUserLogin = _.cloneDeep(userLogin)
     const dispatch = useDispatch()
+    if (!cloneUserLogin.listOrder) {
+        cloneUserLogin.listOrder = []
+    }
+
     let totalPrice = 0
     const [resultTotalPrice, setResultTotalPrice] = useState(0)
     const [displayTotalPrice, setDisplayTotalPrice] = useState('0 đ')
@@ -36,16 +45,40 @@ function Checkout(props) {
     const [optionsProvince, setOptionsProvince] = useState('')
     const [isDisabledDistrict, setIsDisabledDistrict] = useState(true)
     const [isDisabledWard, setIsDisabledWard] = useState(true)
+    let indexCartBuyOne = dataCartAll.findIndex(item => +item.id === +param.id)
+    const [counterBuyone, setCounterBuyone] = useState(0)
+    let dataCart = []
+    let itemBuyOne = dataCartAll[+indexCartBuyOne]
+    if (!param.id) {
+        dataCart = dataCartAll
+    }
+
+    if (param.id) {
+        if (indexCartBuyOne !== -1) {
+            if (counterBuyone == 0) {
+                if (itemBuyOne.quantity > 1) {
+                    dispatch(decreaseBuyOne(itemBuyOne))
+                }
+                setCounterBuyone(prev => prev + 1)
+            }
+            dataCart.push(itemBuyOne)
+        }
+    }
 
     const handelDecreaseProduct = (data) => {
         dispatch(decreaseCart(data))
     }
 
     const handelDeleteProduct = (data) => {
-        dispatch(deleteCart(data))
+        if (!param.id) {
+            dispatch(deleteCart(data))
+        } else {
+            navigate('/')
+        }
     }
 
     useEffect(() => {
+        window.scrollTo(0, 0)
         fetchProvince()
     }, [])
 
@@ -77,7 +110,7 @@ function Checkout(props) {
         switch (type) {
             case "PROVINCE":
                 setDistrict('')
-                setIsDisabledDistrict(false)
+
                 setWArd('')
                 try {
                     const resDistrict = await getDistrict(value.code)
@@ -95,13 +128,14 @@ function Checkout(props) {
                     })
                     setOptionsDistrict(options)
                     setProvince(value.value)
+                    setIsDisabledDistrict(false)
                 } catch (error) {
                     toast.error("Máy chủ lỗi!")
                 }
                 break;
             case "DISTRICT":
                 setWArd('')
-                setIsDisabledWard(false)
+
                 try {
                     const resWard = await getWard(value.code)
                     resWard.wards.map((item) => {
@@ -118,6 +152,7 @@ function Checkout(props) {
                     })
                     setOptionsWArd(options)
                     setDistrict(value.value)
+                    setIsDisabledWard(false)
                 } catch (error) {
                     toast.error("Máy chủ lỗi!")
                 }
@@ -181,6 +216,7 @@ function Checkout(props) {
         let newID = Math.floor(Math.random() * Date.now())
         let listCart = {}
         let cartPush = []
+
         dataCart.map(item => {
             cartPush.push({
                 cartId: item.id,
@@ -190,6 +226,49 @@ function Checkout(props) {
                 name: `${item.type} - ${item.color} - ${item.gender}`
             })
         })
+        var d = new Date();
+        function createAt(date) {
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+            let hour = d.getHours();
+            let minute = d.getMinutes();
+            let second = d.getSeconds();
+
+
+
+            if (month.length < 2)
+                month = '0' + month;
+            if (day.length < 2)
+                day = '0' + day;
+            if (hour.length < 2) {
+                if (hour == 0) {
+                    hour = '00';
+                } else {
+                    hour = '0' + hour
+                }
+            }
+            if (minute.length < 2) {
+                if (minute == 0) {
+                    minute = '00';
+                } else {
+                    minute = '0' + minute
+                }
+            }
+            if (second.length < 2) {
+                if (second == 0) {
+                    second = '00';
+                } else {
+                    second = '0' + second
+                }
+            }
+
+            let createAt = hour + ":" + minute + ":" + second + " " + day + "/" + month + "/" + year
+
+            return createAt;
+        }
+
 
         listCart = {
             name: name,
@@ -202,10 +281,17 @@ function Checkout(props) {
             code: newID,
             state: "waiting",
             cart: cartPush,
-            totalPrice: resultTotalPrice
+            totalPrice: resultTotalPrice,
+            createAt: createAt(d)
         }
 
         try {
+            if (auth === true) {
+                //push order to user
+                cloneUserLogin.listOrder.push(listCart)
+                dispatch(putUpdateInfoUserRedux(cloneUserLogin))
+                dispatch(putInfoUserAction(cloneUserLogin))
+            }
             await postCartOrder(listCart)
             dispatch(deleteAllCart())
             setCodeProduct(newID)
@@ -214,6 +300,8 @@ function Checkout(props) {
             toast.error("Máy chủ lỗi")
         }
     }
+
+
 
     return (
         <div className='checkout-container container pt-5 pb-5'>
@@ -228,41 +316,46 @@ function Checkout(props) {
                         dataCart.length > 0 ?
                             <>
                                 {
-                                    dataCart.map((item) => {
-                                        var number = +item.quantity * +item.price;
-                                        let resultPrice = number.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 3 }) + " đ"
-                                        totalPrice += number
 
-                                        // setResultTotalPrice(resultTotal)
-                                        return (
-                                            <div className='content-checkout pt-3 pb-3' key={item.id}>
-                                                <div className='image-product-checkout'>
-                                                    <img src={item.image1} />
-                                                    <span className='counter-product'>
-                                                        {item.quantity}
-                                                    </span>
-                                                </div>
-                                                <div className='content-product-checkout'>
-                                                    <div className='header-product-checkout'>
-                                                        <h6 className='infor-product-cart' onClick={() => { navigate(`/product/${item.id}`) }}>{item.type} - {item.color}
-                                                            - {item.gender}
-                                                        </h6>
-                                                        <GrClose onClick={() => handelDeleteProduct(item)} className='icon-close' />
-                                                    </div>
-                                                    <div className='footer-product-checkout'>
-                                                        <div className="quantity">
-                                                            <span className='minus' onClick={() => handelDecreaseProduct(item)}>-</span>
-                                                            <span>{+item.quantity}</span>
-                                                            <span className='plus' onClick={() => handelIncreaseProduct(item)}>+</span>
+                                    <>
+                                        {
+                                            dataCart.map((item) => {
+                                                var number = +item.quantity * +item.price;
+                                                let resultPrice = number.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 3 }) + " đ"
+                                                totalPrice += number
+
+                                                // setResultTotalPrice(resultTotal)
+                                                return (
+                                                    <div className='content-checkout pt-3 pb-3' key={item.id}>
+                                                        <div className='image-product-checkout'>
+                                                            <img src={item.image1} />
+                                                            <span className='counter-product'>
+                                                                {item.quantity}
+                                                            </span>
                                                         </div>
-                                                        <div  >
-                                                            {resultPrice}
+                                                        <div className='content-product-checkout'>
+                                                            <div className='header-product-checkout'>
+                                                                <h6 className='infor-product-cart' onClick={() => { navigate(`/product/${item.id}`) }}>{item.type} - {item.color}
+                                                                    - {item.gender}
+                                                                </h6>
+                                                                <GrClose onClick={() => handelDeleteProduct(item)} className='icon-close' />
+                                                            </div>
+                                                            <div className='footer-product-checkout'>
+                                                                <div className="quantity">
+                                                                    <span className='minus' onClick={() => handelDecreaseProduct(item)}>-</span>
+                                                                    <span>{+item.quantity}</span>
+                                                                    <span className='plus' onClick={() => handelIncreaseProduct(item)}>+</span>
+                                                                </div>
+                                                                <div  >
+                                                                    {resultPrice}
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        )
-                                    })
+                                                )
+                                            })
+                                        }
+                                    </>
                                 }
 
                                 <hr />

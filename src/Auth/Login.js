@@ -63,20 +63,7 @@ function Login() {
                 checkLogin = 1;
                 dispatch({
                     type: USER_LOGIN,
-                    user: {
-                        id: dataUser.id,
-                        username: username,
-                        password: dataUser.password,
-                        name: dataUser.name,
-                        phone: dataUser.phone,
-                        birthday: dataUser.birthday,
-                        address: dataUser.address,
-                        province: dataUser.province,
-                        district: dataUser.district,
-                        ward: dataUser.ward,
-                        role: dataUser.role,
-                        listCart: dataUser.listCart
-                    }
+                    user: dataUser
                 })
                 navigate("/")
             }

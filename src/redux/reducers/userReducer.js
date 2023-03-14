@@ -1,4 +1,5 @@
-import { UPDATE_USER, USER_LOGIN, USER_LOGOUT } from "../actions/userActions";
+
+import { UPDATE_USER, USER_LOGIN, USER_LOGOUT, FETCH_LIST_ORDER, DELETE_LIST_ORDER } from "../actions/userActions";
 
 
 const INITIAL_STATE = {
@@ -14,9 +15,10 @@ const INITIAL_STATE = {
         province: "",
         district: "",
         ward: "",
-        listCart: [],
+        listOrder: [],
         auth: false
-    }
+    },
+    listOrderUser: []
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -39,7 +41,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
                     province: action.user.province,
                     district: action.user.district,
                     ward: action.user.ward,
-                    listCart: action.user.listCart,
+                    listOrder: action.user.listOrder,
                     auth: true
                 }
             };
@@ -58,7 +60,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 user: {
-                    id: action.payload.id,
+                    id: state.user.id,
                     username: action.payload.username,
                     role: action.payload.role,
                     password: action.payload.password,
@@ -69,11 +71,24 @@ const userReducer = (state = INITIAL_STATE, action) => {
                     province: action.payload.province,
                     district: action.payload.district,
                     ward: action.payload.ward,
-                    listCart: action.payload.listCart,
+                    listOrder: action.payload.listOrder,
                     auth: true
                 }
 
             };
+
+        case FETCH_LIST_ORDER:
+            // let cloneListOrderUser = 
+            return {
+                ...state,
+                listOrderUser: [...state.listOrderUser, action.payload]
+            }
+        case DELETE_LIST_ORDER:
+
+            return {
+                ...state,
+                listOrderUser: []
+            }
 
         default: return state;
 

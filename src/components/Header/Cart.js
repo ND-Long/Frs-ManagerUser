@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import "./Header.scss"
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useNavigate } from 'react-router-dom';
-
+import { GrClose } from 'react-icons/gr';
 function Cart(props) {
     const { show, setShow } = props
     const dataCart = useSelector(state => state.product.cartProduct)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const handleClose = () => {
         setShow(false)
     };
@@ -25,10 +26,10 @@ function Cart(props) {
     }
 
     return (
-        <div className='cart-model' >
+        <div className='cart-model ' >
 
             <Modal show={show} onHide={handleClose} className='cart-shopping'>
-                <Modal.Header closeButton>
+                <Modal.Header closeButton >
                     <Modal.Title>Giỏ hàng</Modal.Title>
                 </Modal.Header>
                 <Modal.Body >
@@ -46,19 +47,21 @@ function Cart(props) {
                                                 var number = +item.price;
                                                 const result = number.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 3 }) + " đ"
                                                 return (
-                                                    <div key={item.id} className='cart-product mt-1 mb-5' onClick={() => handleDetailsProduct(item.id)} >
-                                                        <div className="img-cart-product mt-1">
+                                                    <div key={item.id} className='cart-product mt-1 mb-5'  >
+                                                        <div className="img-cart-product mt-1" onClick={() => handleDetailsProduct(item.id)}>
                                                             <img className='img-cart-product' src={item.image1} />
                                                             <span className='quantity-product'>{item.quantity || 1}</span>
                                                         </div>
                                                         <div className="detail-product-cart">
-                                                            <div>
+                                                            <div onClick={() => handleDetailsProduct(item.id)}>
                                                                 {` ${item.type.slice(0, 30)} ... `}
                                                             </div>
-                                                            <div className="price">
+                                                            <div className="price me-3">
                                                                 {result}
                                                             </div>
+
                                                         </div>
+                                                        <GrClose className='icon-delete-cart ' />
                                                     </div>
                                                 )
                                             })
