@@ -295,7 +295,9 @@ function Checkout(props) {
             await postCartOrder(listCart)
             dispatch(deleteAllCart())
             setCodeProduct(newID)
-            setShowModalOrder(true)
+            setTimeout(() => {
+                setShowModalOrder(true)
+            }, 2000)
         } catch (error) {
             toast.error("Máy chủ lỗi")
         }

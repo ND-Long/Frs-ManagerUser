@@ -42,6 +42,12 @@
         margin-right: 19px;
     }
 
+    .shadow-cart {
+        height: 1px;
+        width: 94px;
+        // background-color: blue;
+    }
+
     .cart-header {
         display: flex;
         align-items: center;
@@ -265,7 +271,13 @@
 
 
 .nav-router {
-    margin: auto auto;
+    // margin: auto auto;
+    // position: absolute;
+    // background-color: red;
+    width: 100%;
+    // text-align: center;
+    display: flex;
+    justify-content: center;
 
     .link-router {
         text-decoration: none;
@@ -276,6 +288,10 @@
 }
 
 @media only screen and (max-width: 991px) {
+    .nav-router {
+        // background-color: red;
+        justify-content: start;
+    }
 
     .header-container {
         .cart-header {

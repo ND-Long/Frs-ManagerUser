@@ -120,6 +120,9 @@ function Header({ clickContent }) {
                         </span>
                     </div>
                 </Nav.Link>
+                <div className='shadow-cart' >
+
+                </div>
 
             </Container>
             <Cart
