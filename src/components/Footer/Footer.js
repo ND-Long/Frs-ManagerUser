@@ -10,7 +10,7 @@ import { HiMail } from 'react-icons/hi'
 import './Footer.scss'
 const Footer = () => {
     return (
-        <MDBFooter bgColor='light' className='text-center text-lg-start text-muted'>
+        <MDBFooter bgColor='light' className='text-center text-lg-start text-muted footer-component-bootstrap'>
             <section className='container d-flex justify-content-center justify-content-lg-between p-4 border-bottom'>
                 <div className='me-5 d-none d-lg-block '>
                     <span>Kết nối với chúng tôi trên các mạng xã hội:</span>

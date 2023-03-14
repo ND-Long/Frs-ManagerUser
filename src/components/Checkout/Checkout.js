@@ -297,7 +297,7 @@ function Checkout(props) {
             setCodeProduct(newID)
             setTimeout(() => {
                 setShowModalOrder(true)
-            }, 2000)
+            }, 500)
         } catch (error) {
             toast.error("Máy chủ lỗi")
         }

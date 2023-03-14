@@ -88,7 +88,7 @@ function SearchOrder(props) {
     }
 
     return (
-        <div className='search-order-page mx-auto pt-4 col-md-5 p-3 pb-5 '>
+        <div className='search-order-page mx-auto pt-5 col-md-5 p-3 pb-5 '>
             <p className="header-search-order pt-2 text-center" >TRA CỨU ĐƠN HÀNG</p>
             <div className='input-search-order  mx-auto '>
                 <input className='form-control ' placeholder='Nhập mã đơn hàng'

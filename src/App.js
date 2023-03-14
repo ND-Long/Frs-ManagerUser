@@ -55,7 +55,7 @@ function App() {
         <Outlet />
       </div>
       <div className='footer '>
-        <Footer />
+        <Footer className="footer-component" />
       </div>
     </div >
   );
