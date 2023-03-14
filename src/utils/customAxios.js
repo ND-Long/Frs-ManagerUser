@@ -12,7 +12,7 @@ import axios from "axios";
 // })
 
 const instance = axios.create({
-    baseURL: "https://json-server-frs-manager-user.vercel.app/",
+    baseURL: "https://json-server-frs-manager-api.vercel.app/",
     // baseURL: "https://5d55-2401-d800-2e51-2057-6cbc-5693-7d5f-6bc0.ap.ngrok.io",
     // baseURL: "http://localhost:8000",
 
